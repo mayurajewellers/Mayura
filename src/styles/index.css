@@ -1,0 +1,457 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   MAYURA JEWELLERS — GLOBAL FOUNDATION
+   Tokens live in tailwind.config.js. This file defines the base reset,
+   editorial typography defaults and the reusable component layer.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --mj-champagne: #b5a88d;
+    --mj-ivory: #f7f3ea;
+    --mj-charcoal: #292621;
+    --mj-gold: #d4af37;
+    --mj-bronze: #8a6a3f;
+    --mj-espresso: #2b211c;
+    --mj-nav-h: 5.5rem;
+    --mj-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --mj-nav-h: 6.5rem;
+    }
+  }
+
+  * {
+    border-color: theme('colors.charcoal.DEFAULT / 10%');
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-body text-charcoal;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    overflow-x: hidden;
+  }
+
+  /* Editorial headings default to the display serif */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-normal text-charcoal;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Accessible, on-brand focus ring — never removed, only refined */
+  :focus-visible {
+    outline: 2px solid theme('colors.gold.DEFAULT');
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: theme('colors.gold.DEFAULT / 26%');
+    color: theme('colors.charcoal.DEFAULT');
+  }
+
+  /* Quiet, brand-tinted scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.ivory.300');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.champagne.400');
+    border: 3px solid theme('colors.ivory.300');
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.bronze.400');
+  }
+
+  /* Remove number-input spinners for a cleaner form aesthetic */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  img {
+    @apply select-none;
+  }
+
+  /* Honour reduced-motion across every animation in the system */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---------- Layout primitives ---------------------------------------- */
+
+  .mj-container {
+    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16;
+  }
+
+  .mj-container-wide {
+    @apply mx-auto w-full max-w-[1760px] px-5 sm:px-8 lg:px-12 xl:px-16;
+  }
+
+  .mj-container-narrow {
+    @apply mx-auto w-full max-w-3xl px-5 sm:px-8;
+  }
+
+  .mj-section {
+    @apply py-section;
+  }
+
+  .mj-section-sm {
+    @apply py-section-sm;
+  }
+
+  /* ---------- Typography helpers --------------------------------------- */
+
+  .mj-eyebrow {
+    @apply font-sans text-eyebrow font-medium uppercase tracking-luxe text-bronze;
+  }
+
+  .mj-eyebrow-light {
+    @apply font-sans text-eyebrow font-medium uppercase tracking-luxe text-gold-200;
+  }
+
+  .mj-display {
+    @apply font-display font-normal leading-[1.02] tracking-[-0.02em];
+  }
+
+  .mj-quote {
+    @apply font-serif text-[clamp(1.375rem,2.6vw,2.125rem)] font-light italic leading-[1.5] text-charcoal-300;
+  }
+
+  .mj-body-muted {
+    @apply text-body text-charcoal-200;
+  }
+
+  /* ---------- Rules & dividers ----------------------------------------- */
+
+  .mj-rule {
+    @apply h-px w-full bg-charcoal/10;
+  }
+
+  .mj-rule-gold {
+    @apply h-px w-full bg-gold-line opacity-70;
+  }
+
+  .mj-rule-light {
+    @apply h-px w-full bg-ivory/15;
+  }
+
+  /* A small centred gold flourish used between editorial sections */
+  .mj-flourish {
+    @apply relative mx-auto h-px w-24 bg-gold/50;
+  }
+  .mj-flourish::after {
+    content: '';
+    @apply absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gold;
+  }
+
+  /* ---------- Buttons --------------------------------------------------- */
+
+  .mj-btn {
+    @apply relative inline-flex select-none items-center justify-center gap-2.5 overflow-hidden
+           whitespace-nowrap font-sans text-label font-medium uppercase tracking-wider2
+           transition-all duration-400 ease-luxe
+           disabled:pointer-events-none disabled:opacity-45;
+  }
+
+  .mj-btn-primary {
+    @apply mj-btn rounded-luxe bg-charcoal px-9 py-4 text-ivory
+           hover:bg-espresso hover:shadow-lift active:translate-y-px;
+  }
+
+  .mj-btn-gold {
+    @apply mj-btn rounded-luxe bg-gold px-9 py-4 text-espresso
+           hover:bg-gold-600 hover:text-ivory hover:shadow-gold active:translate-y-px;
+  }
+
+  .mj-btn-outline {
+    @apply mj-btn rounded-luxe border border-charcoal/25 bg-transparent px-9 py-4 text-charcoal
+           hover:border-charcoal hover:bg-charcoal hover:text-ivory active:translate-y-px;
+  }
+
+  .mj-btn-outline-light {
+    @apply mj-btn rounded-luxe border border-ivory/35 bg-transparent px-9 py-4 text-ivory
+           hover:border-ivory hover:bg-ivory hover:text-charcoal active:translate-y-px;
+  }
+
+  .mj-btn-ghost {
+    @apply mj-btn rounded-luxe bg-transparent px-4 py-2.5 text-charcoal
+           hover:bg-charcoal/[0.05] active:bg-charcoal/[0.08];
+  }
+
+  .mj-btn-ghost-light {
+    @apply mj-btn rounded-luxe bg-transparent px-4 py-2.5 text-ivory/85
+           hover:bg-ivory/10 hover:text-ivory;
+  }
+
+  .mj-btn-sm {
+    @apply px-6 py-3 text-eyebrow;
+  }
+
+  .mj-btn-lg {
+    @apply px-12 py-5;
+  }
+
+  /* Slow gold sheen that sweeps across a button on hover */
+  .mj-btn-sheen::before {
+    content: '';
+    @apply pointer-events-none absolute inset-0 -translate-x-full
+           bg-gradient-to-r from-transparent via-gold-100/25 to-transparent
+           transition-transform duration-900 ease-luxe;
+  }
+  .mj-btn-sheen:hover::before {
+    @apply translate-x-full;
+  }
+
+  /* ---------- Links ----------------------------------------------------- */
+
+  .mj-link {
+    @apply relative inline-block text-charcoal transition-colors duration-300
+           after:absolute after:bottom-0 after:left-0 after:h-px after:w-full
+           after:origin-right after:scale-x-0 after:bg-gold
+           after:transition-transform after:duration-500 after:ease-luxe
+           hover:text-bronze hover:after:origin-left hover:after:scale-x-100;
+  }
+
+  .mj-link-light {
+    @apply relative inline-block text-ivory/75 transition-colors duration-300
+           after:absolute after:bottom-0 after:left-0 after:h-px after:w-full
+           after:origin-right after:scale-x-0 after:bg-gold
+           after:transition-transform after:duration-500 after:ease-luxe
+           hover:text-ivory hover:after:origin-left hover:after:scale-x-100;
+  }
+
+  /* Underline that draws in from the left — used on nav items */
+  .mj-underline {
+    @apply relative after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full
+           after:origin-left after:scale-x-0 after:bg-current
+           after:transition-transform after:duration-500 after:ease-luxe
+           hover:after:scale-x-100;
+  }
+
+  /* ---------- Form fields ---------------------------------------------- */
+
+  .mj-field {
+    @apply w-full rounded-luxe border border-charcoal/15 bg-transparent
+           px-0 py-3.5 font-sans text-body text-charcoal
+           placeholder:text-charcoal-50/70 placeholder:tracking-wide
+           transition-colors duration-300
+           focus:border-gold focus:outline-none focus:ring-0;
+  }
+
+  /* Underline-only variant — the default across the site */
+  .mj-field-line {
+    @apply w-full border-0 border-b border-charcoal/20 bg-transparent
+           px-0 pb-3 pt-2 font-sans text-body text-charcoal
+           placeholder:text-charcoal-50/60
+           transition-colors duration-400 ease-luxe
+           focus:border-gold focus:outline-none focus:ring-0;
+  }
+
+  .mj-field-line-light {
+    @apply w-full border-0 border-b border-ivory/25 bg-transparent
+           px-0 pb-3 pt-2 font-sans text-body text-ivory
+           placeholder:text-ivory/40
+           transition-colors duration-400 ease-luxe
+           focus:border-gold focus:outline-none focus:ring-0;
+  }
+
+  /* Boxed variant — used inside auth cards and checkout */
+  .mj-field-box {
+    @apply w-full rounded-luxe border border-charcoal/15 bg-ivory-50 px-4 py-3.5
+           font-sans text-body text-charcoal placeholder:text-charcoal-50/60
+           transition-all duration-300 ease-luxe
+           hover:border-charcoal/25
+           focus:border-gold focus:bg-white focus:outline-none focus:ring-0;
+  }
+
+  .mj-field-label {
+    @apply mb-2 block font-sans text-eyebrow font-medium uppercase tracking-luxe text-charcoal-100;
+  }
+
+  .mj-field-error {
+    @apply mt-2 flex items-center gap-1.5 font-sans text-body-xs text-error;
+  }
+
+  /* ---------- Surfaces -------------------------------------------------- */
+
+  .mj-card {
+    @apply rounded-card border border-charcoal/[0.07] bg-white/60 transition-all duration-500 ease-luxe;
+  }
+
+  .mj-card-hover {
+    @apply hover:-translate-y-1 hover:border-charcoal/[0.12] hover:shadow-card-hover;
+  }
+
+  .mj-panel {
+    @apply rounded-panel border border-charcoal/[0.07] bg-ivory-50 shadow-card;
+  }
+
+  .mj-glass-nav {
+    background-color: theme('colors.ivory.200 / 88%');
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+  }
+
+  /* ---------- Media ----------------------------------------------------- */
+
+  .mj-media {
+    @apply relative overflow-hidden rounded-card bg-champagne-100;
+  }
+
+  .mj-media img {
+    @apply h-full w-full object-cover transition-transform duration-1200 ease-luxe;
+  }
+
+  .mj-media-zoom:hover img {
+    @apply scale-[1.06];
+  }
+
+  /* Loading shimmer for images before they decode */
+  .mj-skeleton {
+    background-image: linear-gradient(
+      100deg,
+      theme('colors.champagne.100') 22%,
+      theme('colors.ivory.200') 42%,
+      theme('colors.champagne.100') 62%
+    );
+    background-size: 220% 100%;
+    @apply animate-shimmer;
+  }
+
+  /* ---------- Badges ---------------------------------------------------- */
+
+  .mj-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1
+           font-sans text-eyebrow-sm font-medium uppercase tracking-luxe;
+  }
+
+  .mj-badge-gold {
+    @apply mj-badge border-gold/40 bg-gold/10 text-bronze;
+  }
+
+  .mj-badge-dark {
+    @apply mj-badge border-transparent bg-espresso text-ivory;
+  }
+
+  .mj-badge-light {
+    @apply mj-badge border-charcoal/12 bg-ivory-50 text-charcoal-200;
+  }
+
+  .mj-badge-success {
+    @apply mj-badge border-success/25 bg-success-light text-success-dark;
+  }
+
+  /* ---------- Sections -------------------------------------------------- */
+
+  .mj-section-dark {
+    @apply bg-espresso text-ivory;
+  }
+
+  .mj-section-dark h1,
+  .mj-section-dark h2,
+  .mj-section-dark h3,
+  .mj-section-dark h4 {
+    @apply text-ivory;
+  }
+
+  .mj-section-champagne {
+    @apply bg-champagne text-charcoal;
+  }
+}
+
+@layer utilities {
+  .mj-grain::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0 bg-noise opacity-[0.035] mix-blend-multiply;
+  }
+
+  .mj-grain-light::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0 bg-noise opacity-[0.06] mix-blend-overlay;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mj-hide-scrollbar-x {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .mj-hide-scrollbar-x::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gold-sheen {
+    @apply bg-gold-sheen bg-clip-text text-transparent;
+  }
+
+  .mj-writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .mj-clip-arch {
+    border-radius: 50% 50% 4px 4px / 32% 32% 2% 2%;
+  }
+
+  .mj-scroll-mt {
+    scroll-margin-top: calc(var(--mj-nav-h) + 1.5rem);
+  }
+
+  /* Screen-reader only, restored on focus for skip links */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}

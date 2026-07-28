@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mayura Jewellers">
+  <defs>
+    <linearGradient id="mjGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8A6A3F" />
+      <stop offset="34%" stop-color="#D4AF37" />
+      <stop offset="58%" stop-color="#F4E9C6" />
+      <stop offset="100%" stop-color="#B4922A" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="10" fill="#2B211C" />
+  <!-- Stylised mayura (peacock) plume — three feathers rising from a single stem -->
+  <g fill="none" stroke="url(#mjGold)" stroke-width="2.6" stroke-linecap="round">
+    <path d="M32 47c0-7.5-3.4-11.6-3.4-17.4 0-4.6 3.4-7.6 3.4-7.6s3.4 3 3.4 7.6C35.4 35.4 32 39.5 32 47Z" />
+    <path d="M25.6 44.4c-2.6-5.6-7-6.8-9.4-11.2-1.9-3.5-.6-7.4-.6-7.4s4 .7 6.4 4.2c3 4.3 2.6 9 3.6 14.4Z" />
+    <path d="M38.4 44.4c2.6-5.6 7-6.8 9.4-11.2 1.9-3.5.6-7.4.6-7.4s-4 .7-6.4 4.2c-3 4.3-2.6 9-3.6 14.4Z" />
+  </g>
+  <circle cx="32" cy="17.5" r="3.1" fill="url(#mjGold)" />
+  <path d="M22 51.5h20" stroke="url(#mjGold)" stroke-width="1.6" stroke-linecap="round" opacity=".8" />
+</svg>

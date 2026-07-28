@@ -1,0 +1,36 @@
+/** Masonry gallery — the store, the workshop and the work. */
+
+export const GALLERY_ITEMS = [
+  { src: '/images/editorial/bride-gujarati.jpg', alt: 'Bride in a yellow saree wearing a full kundan bridal suite', caption: 'Anantara bridal suite, Kandivali', span: 'tall', group: 'Bridal' },
+  { src: '/images/editorial/bridal-polki-necklace.jpg', alt: 'Polki choker with a freshwater pearl fringe', caption: 'Ninety-six flat-cut polki, closed setting', span: 'wide', group: 'Bridal' },
+  { src: '/images/editorial/kundan-bangles.jpg', alt: 'Pair of broad kundan kadas with emerald borders', caption: 'Vanaja kundan kadas', span: 'normal', group: 'Craft' },
+  { src: '/images/editorial/gold-haram-velvet.jpg', alt: 'Long gold haram displayed on black velvet', caption: 'Temple haram on the counter', span: 'tall', group: 'Gold' },
+  { src: '/images/editorial/bride-telugu.jpg', alt: 'Bride wearing a layered temple gold necklace', caption: 'Telugu bridal styling', span: 'normal', group: 'Bridal' },
+  { src: '/images/styled/earrings-jhumka-teal.jpg', alt: 'Gold jhumka earrings on teal silk', caption: 'Spun-dome jhumkas', span: 'normal', group: 'Craft' },
+  { src: '/images/editorial/heritage-mother-daughter.jpg', alt: 'Mother and daughter in silk sarees wearing gold jewellery', caption: 'Two generations, one counter', span: 'wide', group: 'Portrait' },
+  { src: '/images/editorial/macro-pendant-water.jpg', alt: 'Gold leaf pendant and matching studs photographed on water', caption: 'Chandrika ocean drop', span: 'normal', group: 'Craft' },
+  { src: '/images/editorial/bridal-ruby-haram.jpg', alt: 'Ruby and emerald bridal haram', caption: '186 Burmese rubies', span: 'tall', group: 'Bridal' },
+  { src: '/images/editorial/men-signet-ring.jpg', alt: 'Man wearing a diamond band and bracelet', caption: 'Vikram, for a wider hand', span: 'normal', group: 'Portrait' },
+  { src: '/images/styled/mangalsutra-gold-teal.jpg', alt: 'Gold mangalsutra with black beads on teal silk', caption: 'Bandhan classic', span: 'normal', group: 'Gold' },
+  { src: '/images/editorial/layered-haram-trunk.jpg', alt: 'Layered gold harams displayed with fitted trunks', caption: 'A trousseau, laid out', span: 'wide', group: 'Gold' },
+  { src: '/images/editorial/bride-north-indian.jpg', alt: 'Bride in a pink lehenga with a gold and kundan set', caption: 'Sangeet styling', span: 'normal', group: 'Bridal' },
+  { src: '/images/editorial/macro-rosegold-sage.jpg', alt: 'Rose gold pendant and ring set with pink stones', caption: 'Nilaya in rose gold', span: 'normal', group: 'Craft' },
+  { src: '/images/editorial/bridal-couple.jpg', alt: 'Couple on their wedding day wearing matched jewellery', caption: 'The morning itself', span: 'tall', group: 'Portrait' },
+  { src: '/images/editorial/ganesha-pendant-red.jpg', alt: 'Gold Ganesha pendant on red silk', caption: 'Vanaja Ganesha', span: 'normal', group: 'Gold' },
+  { src: '/images/editorial/everyday-sisters.jpg', alt: 'Two women in pastel sarees wearing light gold jewellery', caption: 'Daily wear, properly made', span: 'wide', group: 'Portrait' },
+  { src: '/images/editorial/bangle-diamond-blush.jpg', alt: 'Diamond bangle photographed on blush silk', caption: 'Nilaya blush cuff', span: 'normal', group: 'Craft' },
+]
+
+export const GALLERY_GROUPS = ['All', 'Bridal', 'Gold', 'Craft', 'Portrait']
+
+/** Square Instagram-style tiles for the home page feed. */
+export const INSTAGRAM_TILES = [
+  { src: '/images/editorial/studs-gold-rosette.jpg', alt: 'Gold rosette studs' },
+  { src: '/images/editorial/kundan-bangles.jpg', alt: 'Kundan kadas' },
+  { src: '/images/editorial/macro-pendant-water.jpg', alt: 'Gold leaf pendant on water' },
+  { src: '/images/editorial/bride-gujarati.jpg', alt: 'Bride in a yellow saree' },
+  { src: '/images/editorial/ring-floral-filigree.jpg', alt: 'Floral filigree cocktail ring' },
+  { src: '/images/editorial/bangle-diamond-blush.jpg', alt: 'Diamond bangle on blush silk' },
+  { src: '/images/editorial/ganesha-pendant-red.jpg', alt: 'Ganesha pendant on red silk' },
+  { src: '/images/styled/chain-gold-teal.jpg', alt: 'Fine gold chain on teal silk' },
+]
