@@ -4,20 +4,23 @@ A production-ready, frontend-only storefront for **Mayura Jewellers** — Thakur
 Kandivali East, Mumbai. Serving Kandivali since 2004, now in its third generation.
 Built as a luxury editorial experience rather than a conventional e-commerce template.
 
-> **Frontend only.** There is no backend, no database, no authentication, no payment gateway
-> and no API anywhere in this project. Sign in, sign up, wishlist, bag and checkout all exist
-> as fully designed screens with real interaction — they simply do not talk to a server.
+> **Frontend only.** There is no backend, no database, no authentication and no payment
+> gateway in this project. Sign in, sign up, wishlist, bag and checkout all exist as fully
+> designed screens with real interaction — they simply do not talk to a server. The single
+> exception is the contact form, which posts directly to [Web3Forms](https://web3forms.com)
+> and needs no server of ours. See [Contact form](#contact-form-web3forms).
 
 ---
 
 ## Quick start
 
 ```bash
-npm install     # once
-npm run dev     # http://localhost:5173
-npm run build   # production bundle → dist/
-npm run preview # serve the production bundle locally
-npm run lint    # eslint
+npm install                  # once
+cp .env.example .env.local   # once — then paste the Web3Forms access key
+npm run dev                  # http://localhost:5173
+npm run build                # production bundle → dist/
+npm run preview              # serve the production bundle locally
+npm run lint                 # eslint
 ```
 
 Node 18 or newer.
@@ -80,7 +83,8 @@ mayura-jewellers/
 │  ├─ pages/                      one file per route (auth pages under pages/auth)
 │  ├─ styles/index.css            base layer, component layer, utility layer
 │  └─ utils/                      cn, format (INR / weights / dates), catalogue (filter, sort,
-│                                 search, related)
+│                                 search, related), web3forms (contact form delivery)
+├─ .env.example                   the one environment variable this site needs
 ├─ tailwind.config.js             the design system
 ├─ vite.config.js                 aliases and chunking
 └─ jsconfig.json                  editor path resolution
@@ -226,6 +230,43 @@ the text and confirm current rates before publication.
 
 ---
 
+## Contact form (Web3Forms)
+
+The enquiry form on `/contact` sends a real email. It uses
+[Web3Forms](https://web3forms.com), which accepts a POST from the browser and forwards it to
+the inbox its access key was issued for — so the site stays a static deployment with no server,
+no serverless function and no dependency added to `package.json`.
+
+**One-time setup**
+
+1. Go to [web3forms.com](https://web3forms.com), enter **mayurajewellers2019@gmail.com** and
+   press *Create Access Key*. The key is emailed to that inbox and every submission is
+   delivered there. The recipient is bound to the key, so changing where enquiries land means
+   issuing a new key — never editing code.
+2. Locally: `cp .env.example .env.local` and paste the key after
+   `VITE_WEB3FORMS_ACCESS_KEY=`. Restart `npm run dev`.
+3. On Vercel: **Project → Settings → Environment Variables** → add
+   `VITE_WEB3FORMS_ACCESS_KEY` for Production, Preview and Development, then redeploy so the
+   value is baked into the bundle.
+
+Until the key is set the form degrades gracefully: it never posts, and it tells the visitor to
+call or WhatsApp instead.
+
+**What arrives in the inbox** — name, email (also set as reply-to), mobile number, selected
+service, message, the submission timestamp in IST, and `Consent: Yes` with the full consent
+wording the visitor agreed to. A hidden `botcheck` honeypot field travels with every
+submission; Web3Forms silently drops anything that arrives with it filled in.
+
+**On the access key being public** — Vite inlines every `VITE_`-prefixed variable into the
+client bundle, and that is how Web3Forms is meant to be used: the key is a write-only
+identifier that can post a message to one fixed inbox and read nothing back. Do not put a real
+secret (API secret, database URL, password) behind a `VITE_` prefix.
+
+The transport lives in `src/utils/web3forms.js`; the page state machine
+(`idle → sending → sent | error`) lives in `src/pages/ContactPage.jsx`.
+
+---
+
 ## Accessibility
 
 - Semantic landmarks, one `<h1>` per page, correct heading order
@@ -233,7 +274,8 @@ the text and confirm current rates before publication.
 - Focus trapping and restore in the drawer, modal, search overlay and mobile menu
 - `aria-expanded` / `aria-controls` on the accordion, mega menu and sort dropdown
 - `aria-pressed` on toggles, `aria-current` on pagination and active navigation
-- `role="status"` with polite live regions for toasts and form confirmations
+- `role="status"` with polite live regions for toasts and form confirmations, and
+  `aria-invalid` / `aria-describedby` on fields that fail validation
 - Keyboard-operable gallery, filters, quick view and OTP inputs
 - `prefers-reduced-motion` respected globally
 
