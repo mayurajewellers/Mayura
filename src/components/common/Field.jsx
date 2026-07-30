@@ -227,37 +227,62 @@ export const SelectField = forwardRef(function SelectField(
 /* -------------------------------------------------------------------------
    Checkbox & Radio
    ---------------------------------------------------------------------- */
-export function Checkbox({ label, id, description, className, tone = 'dark', ...rest }) {
+export function Checkbox({
+  label,
+  id,
+  description,
+  error,
+  inputRef,
+  className,
+  tone = 'dark',
+  ...rest
+}) {
   const generatedId = useId()
   const fieldId = id ?? generatedId
 
   return (
-    <div className={cn('flex items-start gap-3', className)}>
-      <span className="relative mt-0.5 flex h-[1.05rem] w-[1.05rem] shrink-0">
-        <input
-          id={fieldId}
-          type="checkbox"
-          className="peer h-full w-full cursor-pointer appearance-none rounded-xs border border-charcoal/30 bg-transparent transition-all duration-300 ease-luxe checked:border-gold checked:bg-gold focus-visible:outline-2"
-          {...rest}
-        />
-        <Check
-          className="pointer-events-none absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 scale-0 text-espresso opacity-0 transition-all duration-200 peer-checked:scale-100 peer-checked:opacity-100"
-          strokeWidth={3}
-          aria-hidden="true"
-        />
-      </span>
-      <label
-        htmlFor={fieldId}
-        className={cn(
-          'cursor-pointer select-none font-sans text-body-sm leading-relaxed',
-          tone === 'light' ? 'text-ivory/75' : 'text-charcoal-200',
-        )}
-      >
-        {label}
-        {description && (
-          <span className="mt-0.5 block font-sans text-body-xs text-charcoal-50">{description}</span>
-        )}
-      </label>
+    <div className={className}>
+      <div className="flex items-start gap-3">
+        <span className="relative mt-0.5 flex h-[1.05rem] w-[1.05rem] shrink-0">
+          <input
+            ref={inputRef}
+            id={fieldId}
+            type="checkbox"
+            aria-invalid={error ? 'true' : undefined}
+            aria-describedby={error ? `${fieldId}-error` : undefined}
+            className={cn(
+              'peer h-full w-full cursor-pointer appearance-none rounded-xs border border-charcoal/30 bg-transparent transition-all duration-300 ease-luxe checked:border-gold checked:bg-gold focus-visible:outline-2',
+              error && '!border-error',
+            )}
+            {...rest}
+          />
+          <Check
+            className="pointer-events-none absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 scale-0 text-espresso opacity-0 transition-all duration-200 peer-checked:scale-100 peer-checked:opacity-100"
+            strokeWidth={3}
+            aria-hidden="true"
+          />
+        </span>
+        <label
+          htmlFor={fieldId}
+          className={cn(
+            'cursor-pointer select-none font-sans text-body-sm leading-relaxed',
+            tone === 'light' ? 'text-ivory/75' : 'text-charcoal-200',
+          )}
+        >
+          {label}
+          {description && (
+            <span className="mt-0.5 block font-sans text-body-xs text-charcoal-50">
+              {description}
+            </span>
+          )}
+        </label>
+      </div>
+      {error && (
+        <p id={`${fieldId}-error`} className="mj-field-error items-start pl-[1.8rem]" role="alert">
+          <AlertCircle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} aria-hidden="true" />
+          {error}
+        </p>
+      )}
     </div>
   )
 }

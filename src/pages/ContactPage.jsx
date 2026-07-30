@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
+  AlertCircle,
   Building2,
   Check,
   Clock,
   Facebook,
   Instagram,
+  Loader2,
   Mail,
   MapPin,
   MessageCircle,
@@ -15,6 +17,7 @@ import {
 } from 'lucide-react'
 import { ROUTES } from '@constants/routes'
 import {
+  BRAND,
   BUSINESS_DETAILS,
   BUSINESS_HOURS,
   CONTACT,
@@ -29,9 +32,10 @@ import Accordion from '@components/common/Accordion'
 import Button from '@components/common/Button'
 import SmartImage from '@components/common/SmartImage'
 import Reveal from '@components/motion/Reveal'
-import { SelectField, TextArea, TextField } from '@components/common/Field'
+import { Checkbox, SelectField, TextArea, TextField } from '@components/common/Field'
 import { SpecList } from '@components/common/index.jsx'
 import { Stagger, StaggerItem } from '@components/motion/Stagger'
+import { submitToWeb3Forms } from '@utils/web3forms'
 
 const SOCIAL_ICONS = { instagram: Instagram, facebook: Facebook, youtube: Youtube, whatsapp: MessageCircle }
 
@@ -44,15 +48,93 @@ const ENQUIRY_TYPES = [
   'Book a viewing',
 ]
 
+const CONSENT_TEXT =
+  'I consent to being contacted via SMS, Email, RCS, Phone Calls, Messages, and WhatsApp regarding my enquiry, requested services, and other business-related communications.'
+
+const CONSENT_ERROR = 'Please tick this box so we know we may reply to you.'
+
+/** "Thursday 30 July, 2026 at 5:40 pm IST" — stamped onto every enquiry. */
+function submittedAtLabel(date = new Date()) {
+  const stamp = new Intl.DateTimeFormat('en-IN', {
+    dateStyle: 'full',
+    timeStyle: 'short',
+    timeZone: 'Asia/Kolkata',
+  }).format(date)
+  return `${stamp} IST`
+}
+
 export default function ContactPage() {
   useDocumentTitle('Contact')
-  const [sent, setSent] = useState(false)
 
-  const handleSubmit = (event) => {
+  const formRef = useRef(null)
+  const consentRef = useRef(null)
+
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState('')
+  /** 'idle' | 'sending' | 'sent' | 'error' */
+  const [status, setStatus] = useState('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const sending = status === 'sending'
+
+  const handleConsentChange = (event) => {
+    setConsent(event.target.checked)
+    if (event.target.checked) setConsentError('')
+  }
+
+  /**
+   * The browser already refuses to submit while the box is unticked; this
+   * swaps its native bubble for the site's own inline message so the checkbox
+   * fails the same way every other field does.
+   */
+  const handleConsentInvalid = (event) => {
     event.preventDefault()
-    setSent(true)
-    event.currentTarget.reset()
-    window.setTimeout(() => setSent(false), 8000)
+    const checkbox = event.currentTarget
+    // Stay quiet if an earlier field is empty — the browser is pointing there.
+    if (formRef.current?.querySelector(':invalid') !== checkbox) return
+    setConsentError(CONSENT_ERROR)
+    checkbox.focus()
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const form = formRef.current
+    if (sending || !form) return // one submission at a time
+
+    if (!consent) {
+      setConsentError(CONSENT_ERROR)
+      consentRef.current?.focus()
+      return
+    }
+
+    const data = new FormData(form)
+    setStatus('sending')
+    setErrorMessage('')
+
+    try {
+      await submitToWeb3Forms({
+        subject: `Website enquiry — ${data.get('type')} — ${data.get('name')}`,
+        from_name: `${BRAND.name} website`,
+        name: data.get('name'),
+        email: data.get('email'),
+        replyto: data.get('email'),
+        'Mobile number': data.get('phone'),
+        'Selected service': data.get('type'),
+        message: data.get('message'),
+        'Submitted at': submittedAtLabel(),
+        Consent: `Yes — ${CONSENT_TEXT}`,
+        // Honeypot: only a bot ever ticks this, and Web3Forms drops those.
+        botcheck: data.get('botcheck') !== null,
+      })
+
+      form.reset()
+      setConsent(false)
+      setConsentError('')
+      setStatus('sent')
+    } catch (error) {
+      setErrorMessage(error.message)
+      setStatus('error')
+    }
   }
 
   return (
@@ -211,7 +293,12 @@ export default function ContactPage() {
                     first reply will be. We answer within one working day.
                   </p>
 
-                  <form onSubmit={handleSubmit} className="mt-9 space-y-7">
+                  <form
+                    ref={formRef}
+                    onSubmit={handleSubmit}
+                    aria-busy={sending}
+                    className="mt-9 space-y-7"
+                  >
                     <div className="grid gap-7 sm:grid-cols-2">
                       <TextField label="Full name" name="name" required placeholder="Your name" autoComplete="name" />
                       <TextField
@@ -244,26 +331,84 @@ export default function ContactPage() {
                       placeholder="For example: I am looking for a bridal set for a December wedding, around 60 grams, with a matched pair of jhumkas."
                     />
 
-                    <div className="flex flex-col items-start gap-5 border-t border-charcoal/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
+                    {/* Honeypot — never shown, never tabbable. Bots fill it, people do not. */}
+                    <input
+                      type="checkbox"
+                      name="botcheck"
+                      className="hidden"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                    />
+
+                    <div className="border-t border-charcoal/10 pt-7">
+                      <Checkbox
+                        inputRef={consentRef}
+                        name="consent"
+                        required
+                        checked={consent}
+                        onChange={handleConsentChange}
+                        onInvalid={handleConsentInvalid}
+                        error={consentError}
+                        label={
+                          <>
+                            {CONSENT_TEXT}
+                            <span className="ml-1 text-gold">*</span>
+                          </>
+                        }
+                      />
+                    </div>
+
+                    <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
                       <p className="max-w-xs font-sans text-body-xs leading-relaxed text-charcoal-50">
-                        Demonstration form — nothing is transmitted. Please WhatsApp or call for a
-                        real enquiry.
+                        Your details are used only to answer this enquiry. We never sell them or
+                        pass them on.
                       </p>
-                      <Button type="submit" variant="primary" className="shrink-0">
-                        {sent ? 'Message noted' : 'Send message'}
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        className="shrink-0"
+                        disabled={sending}
+                      >
+                        {sending ? (
+                          <span className="inline-flex items-center gap-2.5">
+                            <Loader2
+                              className="h-[1.05em] w-[1.05em] animate-spin"
+                              strokeWidth={1.6}
+                              aria-hidden="true"
+                            />
+                            Sending…
+                          </span>
+                        ) : (
+                          'Send message'
+                        )}
                       </Button>
                     </div>
 
-                    {sent && (
-                      <p
-                        role="status"
-                        className="flex items-center gap-2.5 rounded-luxe border border-success/25 bg-success-light px-4 py-3.5 font-sans text-body-sm text-success-dark"
-                      >
-                        <Check className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden="true" />
-                        Thank you. This is a frontend demonstration, so nothing was actually sent —
-                        please reach us on {CONTACT.phonePrimary}.
-                      </p>
-                    )}
+                    <div role="status" className="empty:hidden">
+                      {status === 'sent' && (
+                        <p className="flex items-start gap-2.5 rounded-luxe border border-success/25 bg-success-light px-4 py-3.5 font-sans text-body-sm text-success-dark">
+                          <Check
+                            className="mt-0.5 h-4 w-4 shrink-0"
+                            strokeWidth={2}
+                            aria-hidden="true"
+                          />
+                          Thank you — your enquiry is with us. We reply within one working day. If
+                          it is urgent, WhatsApp or call {CONTACT.phonePrimary}.
+                        </p>
+                      )}
+
+                      {status === 'error' && (
+                        <p className="flex items-start gap-2.5 rounded-luxe border border-error/25 bg-error-light px-4 py-3.5 font-sans text-body-sm text-error-dark">
+                          <AlertCircle
+                            className="mt-0.5 h-4 w-4 shrink-0"
+                            strokeWidth={1.8}
+                            aria-hidden="true"
+                          />
+                          {errorMessage}
+                        </p>
+                      )}
+                    </div>
                   </form>
                 </div>
               </Reveal>
