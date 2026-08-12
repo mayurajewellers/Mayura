@@ -54,7 +54,7 @@ const SLIDES = [
     cta: { label: 'View Solaire', to: ROUTES.collection('solaire') },
     secondary: { label: 'Diamond guide', to: ROUTES.blogPost('diamond-grades-that-matter') },
     /* Client-supplied hero photography — /public/images/hero */
-    image: '/images/hero/mayura-hero-03.jpg',
+    image: '/images/editorial/mayura-hero-06.jpg',
     imagePosition: '64% 26%',
     panel: 'bg-ivory-300 text-charcoal',
     tone: 'dark',
