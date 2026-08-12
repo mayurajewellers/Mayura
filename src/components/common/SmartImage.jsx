@@ -39,6 +39,9 @@ export default function SmartImage({
           src={src}
           alt={alt}
           loading={priority ? 'eager' : 'lazy'}
+          /* React 18 forwards the lowercase DOM attribute; the camelCase prop
+             only exists from React 19 — keep runtime behaviour, quiet lint. */
+          // eslint-disable-next-line react/no-unknown-property
           fetchpriority={priority ? 'high' : undefined}
           decoding="async"
           onLoad={() => setLoaded(true)}

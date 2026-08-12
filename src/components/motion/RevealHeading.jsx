@@ -9,6 +9,7 @@ import cn from '@utils/cn'
 export default function RevealHeading({
   text,
   as = 'h2',
+  id,
   className,
   wordClassName,
   delay = 0,
@@ -20,6 +21,7 @@ export default function RevealHeading({
 
   return (
     <Component
+      id={id}
       className={cn('flex flex-wrap', className)}
       initial="hidden"
       whileInView="show"

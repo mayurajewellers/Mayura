@@ -15,21 +15,17 @@ import { getProductBySlug } from '@data/products'
 import { relatedProducts } from '@utils/catalogue'
 import { useShop } from '@context/ShopContext'
 import { useDocumentTitle } from '@hooks/index'
-import {
-  discountPercent,
-  estimatedDelivery,
-  formatCarat,
-  formatPrice,
-  formatWeight,
-} from '@utils/format'
+import { discountPercent, estimatedDelivery, formatPrice } from '@utils/format'
 import ProductGallery from '@components/product/ProductGallery'
+import GoldVariantSelector from '@components/product/GoldVariantSelector'
+import ProductInfoTabs from '@components/product/ProductInfoTabs'
 import ProductRail from '@components/home/ProductRail'
 import QuickView from '@components/collection/QuickView'
 import Button from '@components/common/Button'
 import Rating from '@components/common/Rating'
 import Accordion from '@components/common/Accordion'
 import Modal from '@components/common/Modal'
-import { Badge, Breadcrumbs, SpecList } from '@components/common/index.jsx'
+import { Badge, Breadcrumbs } from '@components/common/index.jsx'
 import Reveal from '@components/motion/Reveal'
 import cn from '@utils/cn'
 
@@ -50,6 +46,7 @@ export default function ProductPage() {
   const { addToCart, isWishlisted, toggleWishlist, recordView, recentProducts } = useShop()
 
   const [size, setSize] = useState(null)
+  const [goldVariant, setGoldVariant] = useState(null)
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false)
   const [quickView, setQuickView] = useState(null)
 
@@ -58,6 +55,7 @@ export default function ProductPage() {
   useEffect(() => {
     if (product) {
       setSize(product.size?.default ?? null)
+      setGoldVariant(null)
       recordView(product.id)
       window.scrollTo({ top: 0, behavior: 'auto' })
     }
@@ -73,17 +71,6 @@ export default function ProductPage() {
 
   const saved = isWishlisted(product.id)
   const discount = discountPercent(product.price, product.compareAtPrice)
-  const totalCarat = product.stones?.reduce((sum, s) => sum + (s.carat ?? 0), 0) ?? 0
-
-  const specs = [
-    { label: 'Metal', value: product.metal },
-    { label: 'Purity', value: product.purity },
-    { label: 'Gross weight', value: formatWeight(product.grossWeight) },
-    { label: 'Net gold weight', value: formatWeight(product.netWeight) },
-    { label: 'Making charges', value: product.makingCharges },
-    ...(totalCarat > 0 ? [{ label: 'Total stone weight', value: formatCarat(totalCarat) }] : []),
-    { label: 'Product code', value: product.sku },
-  ]
 
   const accordions = [
     {
@@ -102,37 +89,6 @@ export default function ProductPage() {
         </div>
       ),
     },
-    {
-      title: 'Specification',
-      content: <SpecList items={specs} className="-mt-3.5" />,
-    },
-    ...(product.stones?.length
-      ? [
-          {
-            title: 'Stone details',
-            content: (
-              <div className="space-y-6">
-                {product.stones.map((stone) => (
-                  <SpecList
-                    key={stone.type}
-                    className="-mt-3.5"
-                    items={[
-                      { label: 'Stone', value: stone.type },
-                      ...(stone.count ? [{ label: 'Count', value: stone.count }] : []),
-                      ...(stone.carat ? [{ label: 'Weight', value: formatCarat(stone.carat) }] : []),
-                      ...(stone.clarity ? [{ label: 'Clarity', value: stone.clarity }] : []),
-                      ...(stone.colour ? [{ label: 'Colour', value: stone.colour }] : []),
-                      ...(stone.cut ? [{ label: 'Cut', value: stone.cut }] : []),
-                      ...(stone.quality ? [{ label: 'Quality', value: stone.quality }] : []),
-                    ]}
-                  />
-                ))}
-                <p className="text-body-sm text-charcoal-100">{product.certification}</p>
-              </div>
-            ),
-          },
-        ]
-      : []),
     {
       title: 'Care instructions',
       content: (
@@ -283,12 +239,22 @@ export default function ProductPage() {
                   </fieldset>
                 )}
 
+                {/* -------------------------------- gold purity & shade */}
+                <GoldVariantSelector
+                  product={product}
+                  value={goldVariant}
+                  onChange={setGoldVariant}
+                />
+
+                {/* ------------------- product details & price breakup */}
+                <ProductInfoTabs product={product} className="mt-9" />
+
                 {/* ---------------------------------------------- actions */}
-                <div className="mt-9 flex gap-3">
+                <div className="mt-8 flex gap-3">
                   <Button
                     variant="primary"
                     fullWidth
-                    onClick={() => addToCart(product, { size })}
+                    onClick={() => addToCart(product, { size, variant: goldVariant })}
                   >
                     Add to bag
                   </Button>
@@ -338,7 +304,7 @@ export default function ProductPage() {
                     },
                     {
                       icon: Repeat,
-                      text: 'Lifetime exchange at the prevailing gold rate, plus free cleaning and polishing.',
+                      text: 'Lifetime exchange at the prevailing gold rate, with deductions stated before you buy.',
                     },
                     {
                       icon: BadgeCheck,

@@ -3,16 +3,20 @@ import { ROUTES } from '@constants/routes'
 import { useDocumentTitle } from '@hooks/index'
 import { BEST_SELLERS, NEW_ARRIVALS, PRODUCTS } from '@data/products'
 import Hero from '@components/home/Hero'
+import ShopByCategory from '@components/home/ShopByCategory'
 import TrustStrip from '@components/home/TrustStrip'
 import ProductRail from '@components/home/ProductRail'
-import ShopByCategory from '@components/home/ShopByCategory'
 import SignatureCollections from '@components/home/SignatureCollections'
 import CraftsmanshipBanner from '@components/home/CraftsmanshipBanner'
 import BridalFeature from '@components/home/BridalFeature'
-import WhyChooseUs from '@components/home/WhyChooseUs'
+import MayuraPromises from '@components/home/MayuraPromises'
 import TestimonialsSection from '@components/home/TestimonialsSection'
+import FounderSection from '@components/home/FounderSection'
 import InstagramGallery from '@components/home/InstagramGallery'
 import VisitStore from '@components/home/VisitStore'
+import InsiderSignup from '@components/home/InsiderSignup'
+import BrandsFamily from '@components/home/BrandsFamily'
+import DiamondCuts from '@components/home/DiamondCuts'
 import QuickView from '@components/collection/QuickView'
 
 export default function HomePage() {
@@ -26,6 +30,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ShopByCategory />
       <TrustStrip />
 
       <ProductRail
@@ -38,7 +43,6 @@ export default function HomePage() {
         onQuickView={setQuickView}
       />
 
-      <ShopByCategory />
       <SignatureCollections />
       <CraftsmanshipBanner />
 
@@ -54,10 +58,15 @@ export default function HomePage() {
       />
 
       <BridalFeature />
-      <WhyChooseUs />
+      <MayuraPromises />
       <TestimonialsSection />
+      <FounderSection />
       <InstagramGallery />
       <VisitStore />
+
+      <InsiderSignup />
+      <BrandsFamily />
+      <DiamondCuts />
 
       <QuickView product={quickView} open={Boolean(quickView)} onClose={() => setQuickView(null)} />
     </>

@@ -9,40 +9,54 @@ export default {
     },
     extend: {
       colors: {
+        /* Mayura royal blue — Pantone 7693 C (#004976). The brand primary. */
+        royal: {
+          DEFAULT: '#004976',
+          50: '#EDF4F9',
+          100: '#D8E7F1',
+          200: '#AECDE2',
+          300: '#7FAECD',
+          400: '#3F82AC',
+          500: '#0E6296',
+          600: '#004976',
+          700: '#003A5E',
+          800: '#002B46',
+          900: '#001C2E',
+        },
         champagne: {
-          DEFAULT: '#B5A88D', // primary background — warm champagne taupe
-          50: '#F6F3EC',
-          100: '#EDE7DB',
-          200: '#DFD5C2',
-          300: '#CEC1A8',
-          400: '#C1B199',
-          500: '#B5A88D',
-          600: '#9C8F73',
-          700: '#7D7159',
-          800: '#5C523F',
-          900: '#3B3428',
+          DEFAULT: '#B9CBD9', // soft powder blue — quiet tinted surfaces
+          50: '#F3F7FA',
+          100: '#E7EEF4',
+          200: '#D8E3EC',
+          300: '#C8D7E3',
+          400: '#BFD0DD',
+          500: '#B9CBD9',
+          600: '#93ACBF',
+          700: '#6D8699',
+          800: '#4A5F6F',
+          900: '#2C3B47',
         },
         ivory: {
-          DEFAULT: '#F7F3EA', // light background — warm ivory
+          DEFAULT: '#F7F4EC', // light background — warm ivory
           50: '#FDFCF8',
           100: '#FAF8F2',
-          200: '#F7F3EA',
-          300: '#F0EADC',
-          400: '#E7DECB',
-          500: '#DCD0B7',
+          200: '#F7F4EC',
+          300: '#F0EBDE',
+          400: '#E7DFCD',
+          500: '#DCD2BA',
         },
         charcoal: {
-          DEFAULT: '#292621', // primary text — deep charcoal
-          50: '#8C857A',
-          100: '#777066',
-          200: '#6B6459',
-          300: '#57514A',
-          400: '#413C36',
-          500: '#292621',
-          600: '#211E1A',
-          700: '#191714',
-          800: '#12100E',
-          900: '#0A0908',
+          DEFAULT: '#152836', // primary text — deep navy ink
+          50: '#82929F',
+          100: '#6A7D8C',
+          200: '#586C7C',
+          300: '#425668',
+          400: '#2A3F51',
+          500: '#152836',
+          600: '#11212D',
+          700: '#0D1A24',
+          800: '#09131B',
+          900: '#050B10',
         },
         gold: {
           DEFAULT: '#D4AF37', // accent — muted champagne gold
@@ -71,10 +85,10 @@ export default {
           900: '#1B150D',
         },
         espresso: {
-          DEFAULT: '#2B211C', // dark luxury section — deep espresso
-          light: '#3A2D26',
-          dark: '#1D1614',
-          deeper: '#150F0D',
+          DEFAULT: '#00365A', // dark luxury section — deep Mayura royal blue
+          light: '#0A4A73',
+          dark: '#002741',
+          deeper: '#001B2E',
         },
         success: { DEFAULT: '#3C6E47', light: '#EAF1EC', dark: '#2C5334' },
         error: { DEFAULT: '#B33A3A', light: '#F7EBEB', dark: '#8A2C2C' },
@@ -153,13 +167,13 @@ export default {
       },
       borderWidth: { hair: '0.5px' },
       boxShadow: {
-        hairline: '0 0 0 1px rgba(41, 38, 33, 0.07)',
-        card: '0 1px 2px rgba(41,38,33,0.03), 0 8px 24px -12px rgba(41,38,33,0.10)',
-        'card-hover': '0 2px 4px rgba(41,38,33,0.04), 0 28px 56px -24px rgba(41,38,33,0.22)',
-        lift: '0 32px 72px -32px rgba(41,38,33,0.32)',
+        hairline: '0 0 0 1px rgba(10, 32, 48, 0.07)',
+        card: '0 1px 2px rgba(10,32,48,0.03), 0 8px 24px -12px rgba(10,32,48,0.10)',
+        'card-hover': '0 2px 4px rgba(10,32,48,0.04), 0 28px 56px -24px rgba(10,32,48,0.22)',
+        lift: '0 32px 72px -32px rgba(10,32,48,0.32)',
         gold: '0 0 0 1px rgba(212,175,55,0.35), 0 18px 40px -20px rgba(212,175,55,0.45)',
-        nav: '0 1px 0 rgba(41,38,33,0.06), 0 12px 32px -24px rgba(41,38,33,0.30)',
-        inset: 'inset 0 0 0 1px rgba(247,243,234,0.14)',
+        nav: '0 1px 0 rgba(10,32,48,0.06), 0 12px 32px -24px rgba(10,32,48,0.30)',
+        inset: 'inset 0 0 0 1px rgba(247,244,236,0.14)',
       },
       transitionTimingFunction: {
         luxe: 'cubic-bezier(0.22, 1, 0.36, 1)',
@@ -185,10 +199,10 @@ export default {
       backgroundImage: {
         'gold-line': 'linear-gradient(90deg, transparent, #D4AF37 18%, #D4AF37 82%, transparent)',
         'gold-sheen': 'linear-gradient(112deg, #8A6A3F 0%, #D4AF37 26%, #F4E9C6 46%, #D4AF37 68%, #8A6A3F 100%)',
-        'fade-ivory': 'linear-gradient(180deg, rgba(247,243,234,0) 0%, rgba(247,243,234,0.92) 62%, #F7F3EA 100%)',
-        'fade-espresso': 'linear-gradient(180deg, rgba(43,33,28,0) 0%, rgba(43,33,28,0.55) 55%, rgba(43,33,28,0.9) 100%)',
-        'scrim-hero': 'linear-gradient(100deg, rgba(29,22,20,0.72) 0%, rgba(29,22,20,0.42) 42%, rgba(29,22,20,0.06) 78%)',
-        'scrim-card': 'linear-gradient(180deg, rgba(29,22,20,0) 34%, rgba(29,22,20,0.62) 100%)',
+        'fade-ivory': 'linear-gradient(180deg, rgba(247,244,236,0) 0%, rgba(247,244,236,0.92) 62%, #F7F4EC 100%)',
+        'fade-espresso': 'linear-gradient(180deg, rgba(0,39,65,0) 0%, rgba(0,39,65,0.55) 55%, rgba(0,39,65,0.9) 100%)',
+        'scrim-hero': 'linear-gradient(100deg, rgba(0,32,54,0.72) 0%, rgba(0,32,54,0.42) 42%, rgba(0,32,54,0.06) 78%)',
+        'scrim-card': 'linear-gradient(180deg, rgba(0,32,54,0) 34%, rgba(0,32,54,0.62) 100%)',
         noise: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
       },
       keyframes: {

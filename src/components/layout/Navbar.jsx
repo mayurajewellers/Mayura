@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { Heart, ImagePlus, Menu, Mic, Search, ShoppingBag, Store, User } from 'lucide-react'
+import { ChevronDown, Heart, ImagePlus, Menu, Mic, Search, ShoppingBag, Store, User } from 'lucide-react'
 import { ROUTES } from '@constants/routes'
 import { CATEGORY_NAV, SERVICE_LINKS } from '@data/navigation'
 import { useShop } from '@context/ShopContext'
-import { useEscapeKey, useScrollPosition } from '@hooks/index'
+import { useEscapeKey, useOnClickOutside, useScrollPosition } from '@hooks/index'
 import { JEWEL_ICONS } from '@components/common/JewelIcons'
 import IconButton from '@components/common/IconButton'
 import Logo from './Logo'
@@ -17,21 +17,26 @@ import cn from '@utils/cn'
  *
  *   Row 1  logo · search · utility icons
  *   Row 2  category rail of thin-line jewellery icons, each with a mega menu
+ *   Row 3  service strip — always visible, on the Mayura royal blue ground
  *
- * The header is always solid and always visible — it never goes transparent
- * over the hero. On scroll it compresses: the rows tighten and the logo steps
- * down a size, so the rail stays usable without dominating the page.
+ * Dropdown behaviour is CLICK-DRIVEN (not hover): clicking a category with a
+ * menu toggles it, clicking again (or outside, or pressing Escape) closes it,
+ * and opening a menu never navigates. Hover only provides visual feedback.
  */
 export default function Navbar({ onOpenSearch, onOpenMenu }) {
-  const { scrolled } = useScrollPosition(40)
+  /* Hysteresis: compact after 130px, expand again only under 16px. The gap
+     (114px) is wider than the header's own height change (~86px on desktop),
+     so scroll-anchoring nudges can never flip the state back — this is what
+     keeps the header perfectly still when the user stops mid-transition. */
+  const { scrolled } = useScrollPosition({ enter: 130, exit: 16 })
   const { cartCount, wishlistCount } = useShop()
   const location = useLocation()
   const navigate = useNavigate()
+  const headerRef = useRef(null)
 
   const [openMenu, setOpenMenu] = useState(null)
   const [query, setQuery] = useState('')
   const [listening, setListening] = useState(false)
-  const closeTimer = useRef(null)
   const recognition = useRef(null)
 
   /* Voice search runs entirely in the browser via the Web Speech API. If the
@@ -75,21 +80,16 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
     }
   }
 
-  const closeMenu = useCallback(() => {
-    window.clearTimeout(closeTimer.current)
-    setOpenMenu(null)
+  const closeMenu = useCallback(() => setOpenMenu(null), [])
+
+  const toggleMenu = useCallback((label) => {
+    setOpenMenu((current) => (current === label ? null : label))
   }, [])
 
-  const scheduleClose = useCallback(() => {
-    window.clearTimeout(closeTimer.current)
-    closeTimer.current = window.setTimeout(() => setOpenMenu(null), 170)
-  }, [])
-
-  const cancelClose = useCallback(() => window.clearTimeout(closeTimer.current), [])
-
+  /* Close on route change, Escape and any click outside the header. */
   useEffect(() => closeMenu(), [location.pathname, closeMenu])
-  useEffect(() => () => window.clearTimeout(closeTimer.current), [])
   useEscapeKey(closeMenu, openMenu !== null)
+  useOnClickOutside(headerRef, closeMenu, openMenu !== null)
 
   const submitSearch = (event) => {
     event.preventDefault()
@@ -101,8 +101,8 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
 
   return (
     <header
+      ref={headerRef}
       className="sticky top-0 z-header border-b border-charcoal/[0.09] bg-ivory-50 shadow-nav"
-      onMouseLeave={scheduleClose}
     >
       {/* ==================================================== utility row */}
       <div className="mj-container-wide">
@@ -211,43 +211,62 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
               const Icon = JEWEL_ICONS[item.icon] ?? JEWEL_ICONS.plume
               const isOpen = openMenu === item.label
               const active = location.pathname === item.to
+              const hasMega = Boolean(item.mega)
 
-              return (
-                <li
-                  key={item.label}
-                  className="shrink-0"
-                  onMouseEnter={() => {
-                    cancelClose()
-                    setOpenMenu(item.mega ? item.label : null)
-                  }}
-                >
-                  <Link
-                    to={item.to}
-                    aria-expanded={item.mega ? isOpen : undefined}
-                    aria-haspopup={item.mega ? 'true' : undefined}
-                    onFocus={() => setOpenMenu(item.mega ? item.label : null)}
+              const itemClasses = cn(
+                'group/cat relative flex items-center gap-2.5 whitespace-nowrap px-3 font-sans text-label transition-colors duration-300 lg:px-4',
+                scrolled ? 'py-3' : 'py-3.5',
+                isOpen || active ? 'text-bronze' : 'text-charcoal-200 hover:text-charcoal',
+              )
+
+              const inner = (
+                <>
+                  <Icon
                     className={cn(
-                      'group/cat relative flex items-center gap-2.5 whitespace-nowrap px-3 font-sans text-label transition-colors duration-300 lg:px-4',
-                      scrolled ? 'py-3' : 'py-3.5',
-                      isOpen || active ? 'text-bronze' : 'text-charcoal-200 hover:text-charcoal',
+                      'h-[1.35rem] w-[1.35rem] shrink-0 transition-colors duration-300',
+                      isOpen || active ? 'text-bronze' : 'text-charcoal-100 group-hover/cat:text-bronze',
                     )}
-                  >
-                    <Icon
+                  />
+                  <span>{item.label}</span>
+                  {hasMega && (
+                    <ChevronDown
                       className={cn(
-                        'h-[1.35rem] w-[1.35rem] shrink-0 transition-colors duration-300',
-                        isOpen || active ? 'text-bronze' : 'text-charcoal-100 group-hover/cat:text-bronze',
+                        'h-3 w-3 shrink-0 text-charcoal-50 transition-transform duration-400 ease-luxe',
+                        isOpen && 'rotate-180 text-bronze',
                       )}
-                    />
-                    <span>{item.label}</span>
-
-                    <span
-                      className={cn(
-                        'absolute inset-x-3 bottom-0 h-[2px] origin-center bg-gold transition-transform duration-400 ease-luxe lg:inset-x-4',
-                        isOpen || active ? 'scale-x-100' : 'scale-x-0 group-hover/cat:scale-x-100',
-                      )}
+                      strokeWidth={1.6}
                       aria-hidden="true"
                     />
-                  </Link>
+                  )}
+                  <span
+                    className={cn(
+                      'absolute inset-x-3 bottom-0 h-[2px] origin-center bg-gold transition-transform duration-400 ease-luxe lg:inset-x-4',
+                      isOpen || active ? 'scale-x-100' : 'scale-x-0 group-hover/cat:scale-x-100',
+                    )}
+                    aria-hidden="true"
+                  />
+                </>
+              )
+
+              return (
+                <li key={item.label} className="shrink-0">
+                  {hasMega ? (
+                    /* Click toggles the menu — it never navigates, so a
+                       customer can open a dropdown without losing their page. */
+                    <button
+                      type="button"
+                      onClick={() => toggleMenu(item.label)}
+                      aria-expanded={isOpen}
+                      aria-haspopup="true"
+                      className={itemClasses}
+                    >
+                      {inner}
+                    </button>
+                  ) : (
+                    <Link to={item.to} onClick={closeMenu} className={itemClasses}>
+                      {inner}
+                    </Link>
+                  )}
                 </li>
               )
             })}
@@ -256,24 +275,29 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
       </nav>
 
       {/* ================================================== service strip
-          Collapses away on scroll so the header stays compact once the
-          customer is into the page. */}
+          Always visible — on the royal blue ground with gold accents so the
+          free in-store services are impossible to miss. Compresses on scroll
+          on large screens, scrolls horizontally on small ones. */}
       <div
         className={cn(
-          'hidden overflow-hidden border-charcoal/[0.07] bg-champagne-50 transition-all duration-500 ease-luxe lg:block',
-          scrolled ? 'max-h-0 border-t-0 opacity-0' : 'max-h-12 border-t opacity-100',
+          'overflow-hidden border-t border-gold/25 bg-espresso transition-all duration-500 ease-luxe',
+          scrolled ? 'lg:max-h-0 lg:border-t-0 lg:opacity-0' : 'lg:max-h-12 lg:opacity-100',
         )}
-        aria-hidden={scrolled}
+        aria-hidden={scrolled ? 'true' : undefined}
       >
         <div className="mj-container-wide">
-          <ul className="flex items-center justify-center gap-x-8 py-2">
+          <ul className="mj-hide-scrollbar-x flex items-center justify-start gap-x-7 py-2.5 lg:justify-center lg:gap-x-9">
             {SERVICE_LINKS.map((service) => (
-              <li key={service.label}>
+              <li key={service.label} className="shrink-0">
                 <Link
                   to={service.to}
                   tabIndex={scrolled ? -1 : 0}
-                  className="font-sans text-eyebrow-sm uppercase tracking-luxe text-charcoal-100 transition-colors duration-300 hover:text-bronze"
+                  className="group/svc flex items-center gap-2 font-sans text-eyebrow-sm uppercase tracking-luxe text-ivory/90 transition-colors duration-300 hover:text-gold-200"
                 >
+                  <span
+                    className="h-1 w-1 rotate-45 bg-gold/80 transition-colors duration-300 group-hover/svc:bg-gold"
+                    aria-hidden="true"
+                  />
                   {service.label}
                 </Link>
               </li>
@@ -285,12 +309,10 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
       {/* ======================================================= dropdowns */}
       <AnimatePresence>
         {openMenu && (
-          <div onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
-            <MegaMenu
-              mega={CATEGORY_NAV.find((item) => item.label === openMenu)?.mega}
-              onNavigate={closeMenu}
-            />
-          </div>
+          <MegaMenu
+            mega={CATEGORY_NAV.find((item) => item.label === openMenu)?.mega}
+            onNavigate={closeMenu}
+          />
         )}
       </AnimatePresence>
     </header>

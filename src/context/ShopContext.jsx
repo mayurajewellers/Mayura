@@ -37,8 +37,9 @@ export function ShopProvider({ children }) {
 
   /* ----------------------------------------------------------------- cart */
   const addToCart = useCallback(
-    (product, { size = null, quantity = 1, silent = false } = {}) => {
-      const lineKey = `${product.id}::${size ?? 'default'}`
+    (product, { size = null, variant = null, quantity = 1, silent = false } = {}) => {
+      const variantKey = variant ? `${variant.purity ?? ''}-${variant.shade ?? ''}` : 'std'
+      const lineKey = `${product.id}::${size ?? 'default'}::${variantKey}`
       let added = true
 
       setCart((current) => {
@@ -54,7 +55,7 @@ export function ShopProvider({ children }) {
           added = false
           return current
         }
-        return [...current, { key: lineKey, productId: product.id, size, quantity }]
+        return [...current, { key: lineKey, productId: product.id, size, variant, quantity }]
       })
 
       if (!silent) {

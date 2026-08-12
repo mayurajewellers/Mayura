@@ -25,8 +25,9 @@ const SLIDES = [
     copy: 'Hallmarked 22K harams, polki chokers and matched suites — eight to fourteen weeks on the bench, fitted three times before they leave.',
     cta: { label: 'Explore Bridal', to: ROUTES.collection('bridal-collection') },
     secondary: { label: 'Book a consultation', to: ROUTES.contact },
-    image: '/images/editorial/bride-gujarati.jpg',
-    imagePosition: '58% center',
+    /* Client-supplied hero photography — /public/images/hero */
+    image: '/images/hero/mayura-hero-01.jpg',
+    imagePosition: '62% 22%',
     panel: 'bg-espresso text-ivory',
     tone: 'light',
   },
@@ -34,12 +35,13 @@ const SLIDES = [
     id: 'assurance',
     eyebrow: 'Free at our counter',
     title: 'Gold testing.',
-    titleAccent: 'Melting. Polishing.',
-    copy: 'Bring in any gold, from anywhere. We will test its purity on the XRF while you watch, melt it, polish it or value it — at no charge, whether you bought it here or not.',
+    titleAccent: 'Melting. Valuation.',
+    copy: 'Bring in any gold, from anywhere. We will test its purity on the XRF while you watch, melt it or value it — at no charge, whether you bought it here or not.',
     cta: { label: 'See our services', to: `${ROUTES.legacy}#services` },
     secondary: { label: 'Book a home visit', to: ROUTES.contact },
-    image: '/images/editorial/gold-haram-velvet.jpg',
-    imagePosition: 'center',
+    /* Client-supplied hero photography — /public/images/hero */
+    image: '/images/hero/mayura-hero-02.jpg',
+    imagePosition: '58% 24%',
     panel: 'bg-champagne text-espresso',
     tone: 'dark',
   },
@@ -51,8 +53,9 @@ const SLIDES = [
     copy: 'We will put four diamonds on a tray at four price points, hand you a loupe, and explain honestly what separates them before anybody mentions money.',
     cta: { label: 'View Solaire', to: ROUTES.collection('solaire') },
     secondary: { label: 'Diamond guide', to: ROUTES.blogPost('diamond-grades-that-matter') },
-    image: '/images/editorial/macro-rosegold-sage.jpg',
-    imagePosition: 'center',
+    /* Client-supplied hero photography — /public/images/hero */
+    image: '/images/hero/mayura-hero-03.jpg',
+    imagePosition: '64% 26%',
     panel: 'bg-ivory-300 text-charcoal',
     tone: 'dark',
   },
@@ -84,17 +87,39 @@ const SLIDES = [
   },
 ]
 
-const AUTOPLAY_MS = 6500
+/* Display interval per slide. The travel animation itself stays at 900ms —
+   only the dwell time was shortened, so nothing flashes. Manual interaction
+   still resets this timer (the effect re-arms whenever `index` changes). */
+const AUTOPLAY_MS = 4800
 
 export default function Hero() {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const reduced = useReducedMotion()
   const timer = useRef(null)
+  const touch = useRef(null)
 
   const go = useCallback((next) => {
     setIndex(((next % SLIDES.length) + SLIDES.length) % SLIDES.length)
   }, [])
+
+  /* Touch swipe — horizontal drags of 48px+ page the carousel; vertical
+     movement is left alone so normal page scrolling is never hijacked. */
+  const onTouchStart = (event) => {
+    const t = event.touches[0]
+    touch.current = { x: t.clientX, y: t.clientY }
+  }
+
+  const onTouchEnd = (event) => {
+    if (!touch.current) return
+    const t = event.changedTouches[0]
+    const dx = t.clientX - touch.current.x
+    const dy = t.clientY - touch.current.y
+    touch.current = null
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      go(index + (dx < 0 ? 1 : -1))
+    }
+  }
 
   useEffect(() => {
     if (paused || reduced) return undefined
@@ -123,6 +148,8 @@ export default function Hero() {
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
       onKeyDown={onKeyDown}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {/* The page's single <h1>. Slide headlines are styled paragraphs — a
           rotating banner is not a heading hierarchy. */}

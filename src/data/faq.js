@@ -219,12 +219,8 @@ export const FAQ_CATEGORIES = [
         a: 'Manufacturing defects for life: failed solder joints, defective clasps, stones lost from a setting that was faulty rather than damaged. It does not cover accidental damage, normal wear, loss, or work done by another jeweller. Repairs outside warranty are quoted before we start.',
       },
       {
-        q: 'Do you offer free cleaning and polishing?',
-        a: 'Yes, for as long as you own the piece, whether you bought it last week or in 2004. Bring it in, leave it for twenty minutes, and collect it cleaned, polished and — for white gold — re-rhodiumed. There is no charge and no appointment needed.',
-      },
-      {
         q: 'How often should white gold be re-plated?',
-        a: 'Rhodium is a surface plating and it wears. Rings need re-plating every 12–18 months, earrings and pendants far less often because they see less friction. We do it free of charge for pieces bought from us.',
+        a: 'Rhodium is a surface plating and it wears. Rings need re-plating every 12–18 months, earrings and pendants far less often because they see less friction. Ask at the counter and we will quote it before we start.',
       },
       {
         q: 'Can you repair jewellery I did not buy from you?',

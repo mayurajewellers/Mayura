@@ -13,7 +13,7 @@ import {
   ScanLine,
   Search,
   ShieldCheck,
-  Wrench,
+  Video,
 } from 'lucide-react'
 import { ROUTES } from '@constants/routes'
 import { BRAND, CONTACT, OWNER } from '@constants/site'
@@ -38,7 +38,7 @@ import SmartImage from '@components/common/SmartImage'
 import { JEWEL_ICONS } from '@components/common/JewelIcons'
 import { Stagger, StaggerItem } from '@components/motion/Stagger'
 
-const SERVICE_ICONS = { scan: ScanLine, flame: Flame, wrench: Wrench, home: Home }
+const SERVICE_ICONS = { scan: ScanLine, flame: Flame, home: Home, video: Video }
 const CHANNEL_ICONS = { instagram: Instagram, whatsapp: MessageCircle, directory: Search }
 
 export default function LegacyPage() {
@@ -168,7 +168,7 @@ export default function LegacyPage() {
             <div className="lg:col-span-7">
               <ul className="divide-y divide-ivory/12">
                 {SERVICES.map((service, index) => {
-                  const Icon = SERVICE_ICONS[service.icon] ?? Wrench
+                  const Icon = SERVICE_ICONS[service.icon] ?? ScanLine
                   return (
                     <Reveal
                       as="li"

@@ -75,14 +75,14 @@ const CARE_GOLD = [
   'Store each piece in its own pouch — gold is soft and scratches gold.',
   'Remove before swimming, bathing or applying perfume and hairspray.',
   'Wipe with the flannel cloth supplied after each wearing.',
-  'Bring it to the counter twice a year for a free ultrasonic clean and polish.',
+  'Have it professionally cleaned twice a year to keep the finish bright.',
 ]
 
 const CARE_DIAMOND = [
   'Skin oil is what dulls a diamond, not dust — soak in warm water with a drop of dish soap and brush gently with a soft toothbrush.',
   'Never use bleach, chlorine or ammonia; they attack the alloy, not the stone.',
   'Have the claws checked once a year. A loose claw is cheap to fix and expensive to ignore.',
-  'Free professional cleaning and rhodium re-plating at our counter, for life.',
+  'Professional cleaning and rhodium re-plating keep white gold looking new — ask at the counter.',
 ]
 
 const CARE_ANTIQUE = [
@@ -106,7 +106,7 @@ let seq = 1000
 
 const make = (p) => {
   seq += 1
-  const typeCode = { necklaces: 'NK', earrings: 'ER', rings: 'RG', bangles: 'BG', mangalsutra: 'MS', pendants: 'PD', chains: 'CH' }[p.type]
+  const typeCode = { necklaces: 'NK', earrings: 'ER', rings: 'RG', bangles: 'BG', mangalsutra: 'MS', pendants: 'PD', chains: 'CH', coins: 'GC', idols: 'GI', accessories: 'AC' }[p.type] ?? 'MJ'
   return {
     id: `MJ-${typeCode}-${seq}`,
     sku: `MJ${typeCode}${seq}`,
@@ -121,8 +121,24 @@ const make = (p) => {
     care: CARE_GOLD,
     shipping: SHIPPING_STD,
     returns: RETURNS_STD,
-    warranty: 'Lifetime warranty against manufacturing defects. Free cleaning and polishing for as long as you own the piece.',
+    warranty: 'Lifetime warranty against manufacturing defects.',
     certification: 'BIS hallmarked with a six-digit HUID.',
+    /* ------------------------------------------------------------------
+       Gold variant options (purity & shade). `null` means the piece is made
+       in exactly one specification — the PDP then shows that specification
+       as a fixed chip rather than pretending other variants exist.
+       Shape: { purities: ['22KT', …], shades: ['yellow', 'rose', 'white'] }
+       ---------------------------------------------------------------- */
+    goldOptions: null,
+    /* ------------------------------------------------------------------
+       Price breakup — intentionally null until real component pricing
+       (gold rate, stone value, making) is supplied by the business/backend.
+       Shape when provided:
+       { goldValue, stoneValue, makingCharges, otherCharges, gst, total }
+       The PDP renders an honest "confirmed at billing" state when null.
+       ---------------------------------------------------------------- */
+    priceBreakup: null,
+    styleTags: [],
     ...p,
     images: p.images,
     netWeight: p.netWeight ?? p.grossWeight,
@@ -664,7 +680,7 @@ export const PRODUCTS = [
     highlights: [
       'Articulated drop — the pear moves with you',
       'Fifty-eight EF/VS1 diamonds',
-      'Rhodium finish, free re-plating for life',
+      'Bright rhodium finish over 18K white gold',
       'Post and butterfly with a security notch',
     ],
   }),
@@ -1422,7 +1438,7 @@ export const PRODUCTS = [
       'Sixty-two matched EF/VS1 diamonds, 3.42ct total',
       'Box clasp with figure-of-eight safety catch',
       'Articulated links — lies flat on the wrist',
-      'Free claw check annually, for life',
+      'Annual claw check recommended — quick counter service',
     ],
   }),
   make({
@@ -1754,7 +1770,7 @@ export const PRODUCTS = [
       '0.58ct E/VVS2, GIA certified with a laser-inscribed girdle',
       'Martini setting — open beneath the stone',
       'Fixed bail keeps the stone facing forward',
-      'Free annual claw check for life',
+      'Annual claw check recommended — quick counter service',
     ],
   }),
   make({
@@ -1957,7 +1973,264 @@ export const PRODUCTS = [
       'Weight-rated lobster clasp',
     ],
   }),
+
+  /* ================= COINS, BARS, IDOLS & BRIDAL ACCESSORIES ============
+     Demonstration fixtures like everything above — indicative pricing only.
+     TODO(client): replace imagery with dedicated coin/idol photography. */
+  make({
+    slug: 'mayura-lakshmi-gold-coin-10g',
+    name: 'Mayura Lakshmi Gold Coin — 10 g',
+    type: 'coins',
+    collection: 'kanaka',
+    departments: ['gold-jewellery', 'gold-coins'],
+    audience: 'unisex',
+    price: 108000,
+    images: [IMG.haramVelvet],
+    metal: '24K Yellow Gold',
+    metalKey: 'yellow-gold',
+    purity: '24K · 995 assay certified',
+    grossWeight: 10.0,
+    makingCharges: 'Flat minting charge, shown on invoice',
+    occasions: ['Gifting', 'Festive', 'Anniversary'],
+    styleTags: ['gold-coin-bar'],
+    rating: 4.9,
+    reviewCount: 31,
+    description:
+      'A ten-gram 995 coin struck with the Lakshmi motif, sealed in tamper-evident assay packaging. Billed at the day’s rate with the minting charge written separately on the invoice.',
+    highlights: [
+      '995 purity, assay certified and sealed',
+      'Tamper-evident packaging — do not break the seal to preserve resale',
+      'Billed transparently at the day’s gold rate',
+      'Buyback at the prevailing rate against the invoice',
+    ],
+  }),
+  make({
+    slug: 'mayura-gold-bar-5g',
+    name: 'Mayura Gold Bar — 5 g',
+    type: 'coins',
+    collection: 'kanaka',
+    departments: ['gold-jewellery', 'gold-coins'],
+    audience: 'unisex',
+    price: 54500,
+    images: [IMG.haramVelvet],
+    metal: '24K Yellow Gold',
+    metalKey: 'yellow-gold',
+    purity: '24K · 999 assay certified',
+    grossWeight: 5.0,
+    makingCharges: 'Flat minting charge, shown on invoice',
+    occasions: ['Gifting', 'Festive'],
+    styleTags: ['gold-coin-bar'],
+    rating: 4.8,
+    reviewCount: 19,
+    description:
+      'A five-gram 999 minted bar in sealed assay packaging — the simplest way to hold gold, and the piece most often bought on Akshaya Tritiya and Dhanteras.',
+    highlights: [
+      '999 purity, assay certified and sealed',
+      'Serial-numbered packaging',
+      'Billed at the day’s rate, minting charge on the invoice',
+      'Buyback at the prevailing rate against the invoice',
+    ],
+  }),
+  make({
+    slug: 'mayura-gold-ganesha-idol',
+    name: 'Gold Ganesha Idol',
+    type: 'idols',
+    collection: 'vanaja',
+    departments: ['gold-jewellery'],
+    audience: 'unisex',
+    price: 124000,
+    images: [IMG.ganeshaRed],
+    metal: '22K Yellow Gold',
+    metalKey: 'yellow-gold',
+    purity: '22K · 916 hallmarked',
+    grossWeight: 14.6,
+    makingCharges: '18% of gold value',
+    occasions: ['Festive', 'Gifting'],
+    styleTags: ['idols'],
+    rating: 4.9,
+    reviewCount: 14,
+    madeToOrder: true,
+    shipping: SHIPPING_MTO,
+    returns: RETURNS_MTO,
+    care: CARE_ANTIQUE,
+    description:
+      'A seated Ganesha worked in 22K with an antique finish, weighted at the base so it sits properly in a mandir. Made to order in two to three weeks.',
+    highlights: [
+      'Hand-finished antique patina',
+      'Weighted, felt-lined base',
+      'Made to order — larger sizes on request',
+      'Supplied in a fitted gifting box',
+    ],
+  }),
+  make({
+    slug: 'anantara-kundan-maang-tikka',
+    name: 'Anantara Kundan Maang Tikka',
+    type: 'accessories',
+    collection: 'anantara',
+    departments: ['gold-jewellery', 'bridal-collection', 'gemstones'],
+    audience: 'women',
+    price: 64500,
+    images: [IMG.necklacePolki, IMG.kundanBangles],
+    badge: 'Bridal',
+    metal: '22K Yellow Gold',
+    metalKey: 'yellow-gold',
+    purity: '22K · 916 hallmarked',
+    grossWeight: 8.2,
+    netWeight: 7.1,
+    makingCharges: '16% of gold value',
+    stones: [{ type: 'Polki (uncut diamond)', count: 11, carat: 0.9, quality: 'Natural, flat-cut' }, { type: 'Pearl', count: 9, quality: 'Freshwater drop' }],
+    occasions: ['Wedding', 'Sangeet', 'Reception'],
+    styleTags: ['maang-tikka'],
+    rating: 4.8,
+    reviewCount: 12,
+    care: CARE_ANTIQUE,
+    certification: 'BIS hallmarked with HUID. Polki authenticated by SGL.',
+    description:
+      'Closed-set kundan over foil with a pearl fringe, on a weight-balanced chain that sits still through a seven-hour ceremony. Matched to the Anantara polki choker.',
+    highlights: [
+      'Closed kundan settings over 24K foil',
+      'Weight-balanced chain — stays centred without tape',
+      'Freshwater pearl fringe',
+      'Matches the Anantara polki choker',
+    ],
+  }),
+  make({
+    slug: 'vanaja-pearl-nath',
+    name: 'Vanaja Pearl Nath',
+    type: 'accessories',
+    collection: 'vanaja',
+    departments: ['gold-jewellery', 'bridal-collection'],
+    audience: 'women',
+    price: 28500,
+    images: [IMG.studsRosette],
+    metal: '22K Yellow Gold',
+    metalKey: 'yellow-gold',
+    purity: '22K · 916 hallmarked',
+    grossWeight: 4.1,
+    makingCharges: '15% of gold value',
+    stones: [{ type: 'Pearl', count: 3, quality: 'Freshwater' }],
+    occasions: ['Wedding', 'Festive'],
+    styleTags: ['nath'],
+    rating: 4.7,
+    reviewCount: 9,
+    care: CARE_ANTIQUE,
+    description:
+      'A traditional Maharashtrian-style nath with a clip fitting — no piercing needed — strung with three freshwater pearls on hand-drawn 22K wire.',
+    highlights: [
+      'Clip fitting, no piercing required',
+      'Hand-drawn 22K wire work',
+      'Three freshwater pearls',
+      'Sits flat against the cheek',
+    ],
+  }),
+  make({
+    slug: 'nilaya-diamond-pendant-set',
+    name: 'Nilaya Diamond Pendant Set',
+    type: 'pendants',
+    collection: 'nilaya',
+    departments: ['diamond-jewellery', 'daily-wear'],
+    audience: 'women',
+    price: 86500,
+    compareAtPrice: 92000,
+    images: [IMG.pendantTeal, IMG.pendantLeaf],
+    badge: 'New',
+    metal: '18K Yellow Gold',
+    metalKey: 'yellow-gold',
+    purity: '18K · 750 hallmarked',
+    grossWeight: 6.8,
+    netWeight: 6.2,
+    makingCharges: '17% of gold value',
+    stones: [{ type: 'Diamond', count: 34, carat: 0.62, clarity: 'VS', colour: 'GH', cut: 'Round brilliant' }],
+    size: { label: 'Chain length', options: ['16"', '18"'], default: '18"' },
+    occasions: ['Office', 'Daily', 'Gifting', 'Anniversary'],
+    styleTags: ['pendant-sets'],
+    /* Demo variant data — TODO(client): confirm which purities and shades
+       this design is actually offered in before going live with variants. */
+    goldOptions: {
+      purities: ['14KT', '18KT'],
+      defaultPurity: '18KT',
+      shades: ['yellow', 'rose', 'white'],
+      defaultShade: 'yellow',
+    },
+    rating: 4.8,
+    reviewCount: 21,
+    care: CARE_DIAMOND,
+    description:
+      'A matched pendant and stud set in bezel settings low enough to live under a sleeve — the set we recommend for a first diamond purchase.',
+    highlights: [
+      'Matched pendant and studs, sold as a set',
+      'Bezel settings — nothing catches on wool',
+      'IGI-graded VS stones',
+      'Supplied with certificate and matched pouches',
+    ],
+  }),
 ]
+
+/* ---------------------------------------------------------------------------
+   Post-processing — style tags and department tagging derived from the
+   catalogue itself, so filters always agree with the data underneath them.
+   ------------------------------------------------------------------------ */
+const NAME_TAGS = [
+  { tag: 'jhumkas', test: /jhumka/i },
+  { tag: 'hoops', test: /hoop|huggie/i },
+]
+
+for (const p of PRODUCTS) {
+  for (const { tag, test } of NAME_TAGS) {
+    if (test.test(p.name) && !p.styleTags.includes(tag)) p.styleTags.push(tag)
+  }
+  /* Coloured natural stones → the Gemstones department. */
+  const hasColouredStone = (p.stones ?? []).some((s) =>
+    /ruby|emerald|sapphire|gemstone|topaz|amethyst|citrine|peridot|pearl/i.test(s.type),
+  )
+  if (hasColouredStone && !p.departments.includes('gemstones')) p.departments.push('gemstones')
+
+  /* Machine-drawn fine chains → the Italian Collection.
+     TODO(client): confirm exactly which chain patterns are Italian imports. */
+  if (p.type === 'chains' && /rope|box|singapore|figaro|cable/i.test(p.name) && !p.departments.includes('italian-collection')) {
+    p.departments.push('italian-collection')
+  }
+}
+
+/* Demo variant data on one solitaire — TODO(client): confirm real availability. */
+const haloRing = PRODUCTS.find((p) => p.slug === 'solaire-halo-solitaire-ring')
+if (haloRing) {
+  haloRing.goldOptions = {
+    purities: ['14KT', '18KT'],
+    defaultPurity: '18KT',
+    shades: ['yellow', 'rose', 'white'],
+    defaultShade: 'white',
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Style filters — the jewellery-type filter rail. Each entry carries a
+   predicate so a filter can never exist without the data to answer it;
+   the UI additionally hides any style with zero matching pieces.
+   ------------------------------------------------------------------------ */
+export const STYLE_FILTERS = [
+  { key: 'rings', label: 'Rings', match: (p) => p.type === 'rings' },
+  { key: 'chains', label: 'Chains', match: (p) => p.type === 'chains' },
+  { key: 'earrings', label: 'Earrings', match: (p) => p.type === 'earrings' },
+  { key: 'jhumkas', label: 'Jhumkas', match: (p) => p.styleTags.includes('jhumkas') },
+  { key: 'mangalsutra', label: 'Mangalsutra', match: (p) => p.type === 'mangalsutra' },
+  { key: 'necklaces', label: 'Necklaces', match: (p) => p.type === 'necklaces' },
+  { key: 'pendants', label: 'Pendants', match: (p) => p.type === 'pendants' && !p.styleTags.includes('pendant-sets') },
+  { key: 'pendant-sets', label: 'Pendant Sets', match: (p) => p.styleTags.includes('pendant-sets') },
+  { key: 'bracelets', label: 'Bracelets', match: (p) => p.type === 'bangles' && /bracelet/i.test(p.name) },
+  { key: 'bangles', label: 'Bangles', match: (p) => p.type === 'bangles' && !/bracelet/i.test(p.name) },
+  { key: 'hoops', label: 'Hoops', match: (p) => p.styleTags.includes('hoops') },
+  { key: 'maang-tikka', label: 'Maang Tikka', match: (p) => p.styleTags.includes('maang-tikka') },
+  { key: 'nath', label: 'Nath', match: (p) => p.styleTags.includes('nath') },
+  { key: 'watches', label: 'Watches', match: (p) => p.styleTags.includes('watches') },
+  { key: 'idols', label: 'Idols', match: (p) => p.type === 'idols' || p.styleTags.includes('idols') },
+  { key: 'gold-coin-bar', label: 'Gold Coin / Bar', match: (p) => p.type === 'coins' || p.styleTags.includes('gold-coin-bar') },
+]
+
+/** Only the styles that actually have pieces behind them are shown in the UI. */
+export const AVAILABLE_STYLE_FILTERS = STYLE_FILTERS.filter((style) =>
+  PRODUCTS.some(style.match),
+)
 
 /* ---------------------------------------------------------------------------
    Derived helpers
@@ -1982,6 +2255,7 @@ export const METAL_OPTIONS = [
 ]
 
 export const PURITY_OPTIONS = [
+  { key: '24K', label: '24K · Coins & bars' },
   { key: '22K', label: '22K · 916' },
   { key: '18K', label: '18K · 750' },
 ]

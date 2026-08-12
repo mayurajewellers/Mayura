@@ -23,6 +23,8 @@ import BlogPage from '@pages/BlogPage'
 import BlogPostPage from '@pages/BlogPostPage'
 import TestimonialsPage from '@pages/TestimonialsPage'
 import GalleryPage from '@pages/GalleryPage'
+import VideoConsultationPage from '@pages/VideoConsultationPage'
+import RishtaPlanPage from '@pages/RishtaPlanPage'
 import PolicyPage from '@pages/PolicyPage'
 import NotFoundPage from '@pages/NotFoundPage'
 
@@ -53,7 +55,11 @@ export default function App() {
           <Route path={ROUTES.blog} element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path={ROUTES.testimonials} element={<TestimonialsPage />} />
+          {/* /reviews is the customer-facing alias for the same page. */}
+          <Route path={ROUTES.reviews} element={<TestimonialsPage />} />
           <Route path={ROUTES.gallery} element={<GalleryPage />} />
+          <Route path={ROUTES.videoConsultation} element={<VideoConsultationPage />} />
+          <Route path={ROUTES.rishtaPlan} element={<RishtaPlanPage />} />
 
           {/* ------------------------------------------------------ legal */}
           <Route path={ROUTES.terms} element={<PolicyPage policyKey="terms" />} />

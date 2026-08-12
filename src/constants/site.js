@@ -103,8 +103,8 @@ export const ASSURANCES = [
   },
   {
     icon: 'sparkles',
-    title: 'Free Care For Life',
-    copy: 'Cleaning, polishing and rhodium re-plating at our counter, always without charge.',
+    title: 'Transparent Pricing',
+    copy: 'Net weight, rate, making charge and GST written down before you decide.',
   },
 ]
 
