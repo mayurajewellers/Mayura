@@ -1,4 +1,4 @@
-import { PRODUCTS } from '@data/products'
+import { PRODUCTS, STYLE_FILTERS } from '@data/products'
 import { DEPARTMENTS, TYPES } from '@data/categories'
 import { COLLECTIONS } from '@data/collections'
 
@@ -107,6 +107,7 @@ export function sortProducts(list, key = 'featured') {
 
 export const EMPTY_FILTERS = {
   types: [],
+  styles: [],
   metals: [],
   purities: [],
   occasions: [],
@@ -115,10 +116,13 @@ export const EMPTY_FILTERS = {
   inStockOnly: false,
 }
 
+const styleMatchers = new Map(STYLE_FILTERS.map((s) => [s.key, s.match]))
+
 export function filterProducts(list, filters) {
   const f = { ...EMPTY_FILTERS, ...filters }
   return list.filter((p) => {
     if (f.types.length && !f.types.includes(p.type)) return false
+    if (f.styles.length && !f.styles.some((key) => styleMatchers.get(key)?.(p))) return false
     if (f.metals.length && !f.metals.includes(p.metalKey)) return false
     if (f.purities.length && !f.purities.some((k) => p.purity.startsWith(k))) return false
     if (f.departments.length && !f.departments.some((d) => p.departments.includes(d))) return false
@@ -133,6 +137,7 @@ export const countActiveFilters = (filters) => {
   const f = { ...EMPTY_FILTERS, ...filters }
   return (
     f.types.length +
+    f.styles.length +
     f.metals.length +
     f.purities.length +
     f.occasions.length +

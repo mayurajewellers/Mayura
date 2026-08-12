@@ -109,6 +109,9 @@ export default function CartPage() {
                               </h2>
                               <p className="mt-2 font-sans text-body-xs text-charcoal-50">
                                 {line.size && `${line.product.size.label}: ${line.size} · `}
+                                {line.variant?.purity && `${line.variant.purity}`}
+                                {line.variant?.shade && ` ${line.variant.shade} gold`}
+                                {line.variant && ' · '}
                                 {formatWeight(line.product.grossWeight)} · {line.product.sku}
                               </p>
                             </div>
@@ -255,6 +258,15 @@ export default function CartPage() {
                         target="_blank"
                       >
                         Confirm on WhatsApp instead
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        fullWidth
+                        className="mt-3"
+                        to={ROUTES.videoConsultation}
+                      >
+                        See these on a video call first
                       </Button>
 
                       <ul className="mt-8 space-y-3.5 border-t border-charcoal/10 pt-7">

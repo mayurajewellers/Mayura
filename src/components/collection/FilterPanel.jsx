@@ -1,6 +1,5 @@
 import { X } from 'lucide-react'
-import { TYPES } from '@data/categories'
-import { METAL_OPTIONS, OCCASION_OPTIONS, PRICE_BOUNDS, PURITY_OPTIONS } from '@data/products'
+import { AVAILABLE_STYLE_FILTERS, METAL_OPTIONS, OCCASION_OPTIONS, PRICE_BOUNDS, PURITY_OPTIONS } from '@data/products'
 import { countActiveFilters } from '@utils/catalogue'
 import { formatPriceCompact } from '@utils/format'
 import { Checkbox } from '@components/common/Field'
@@ -54,13 +53,13 @@ export default function FilterPanel({ filters, onChange, onReset, className }) {
         )}
       </div>
 
-      <Group title="Piece">
-        {TYPES.map((type) => (
+      <Group title="Jewellery type">
+        {AVAILABLE_STYLE_FILTERS.map((style) => (
           <Checkbox
-            key={type.slug}
-            label={type.name}
-            checked={filters.types?.includes(type.slug) ?? false}
-            onChange={() => toggle('types', type.slug)}
+            key={style.key}
+            label={style.label}
+            checked={filters.styles?.includes(style.key) ?? false}
+            onChange={() => toggle('styles', style.key)}
           />
         ))}
       </Group>

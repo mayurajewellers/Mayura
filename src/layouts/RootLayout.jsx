@@ -6,6 +6,7 @@ import SearchOverlay from '@components/layout/SearchOverlay'
 import Footer from '@components/layout/Footer'
 import WhatsAppButton from '@components/layout/WhatsAppButton'
 import Toaster from '@components/layout/Toaster'
+import EngagementManager from '@components/engagement/EngagementManager'
 import { SkipLink } from '@components/common/index.jsx'
 
 export default function RootLayout() {
@@ -45,6 +46,7 @@ export default function RootLayout() {
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
       <WhatsAppButton />
       <Toaster />
+      <EngagementManager />
     </div>
   )
 }

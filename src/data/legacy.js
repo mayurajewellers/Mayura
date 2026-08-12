@@ -58,14 +58,14 @@ export const SERVICES = [
     copy: 'Old, broken or unwearable pieces melted down in front of you, weighed before and after, and credited at that day’s rate for the purity read.',
   },
   {
-    icon: 'wrench',
-    title: 'Repairs & Polishing',
-    copy: 'Clasps, solder joints, loose stones, rhodium re-plating and ultrasonic cleaning. Quoted before we start, and free for life on anything we sold you.',
-  },
-  {
     icon: 'home',
     title: 'Home Visit Service',
     copy: 'Across Mumbai, by appointment. A member of our team brings a selection to you, stays with it throughout, and takes it away again if nothing suits.',
+  },
+  {
+    icon: 'video',
+    title: 'Video Consultation',
+    copy: 'Choose up to five designs online and see them live on a video call with a jewellery expert before you visit the store.',
   },
 ]
 

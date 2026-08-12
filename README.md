@@ -318,3 +318,44 @@ page — a rotating banner is not a heading hierarchy — and each slide is a la
 Shop No. 12, 13, 14, Rangoli Building, Vasant Utsav, Thakur Village, Mumbai, MH 400101.
 #   M a y u r a _ J e w e l l e r s  
  
+---
+
+## August 2026 — Royal Blue Redesign & Feature Release
+
+The site was re-themed to the Mayura brand primary **#004976 (Pantone 7693 C)** with gold
+accents, and extended with the following (all frontend-only, backend-ready):
+
+**New sections & pages**
+- Shop by Category (6 windows: Gold, Diamond, Gemstones, Italian, Gold Coins, Kids) under the hero
+- The Mayura Advantage benefits band · 7 Mayura Promises · Founder's note · Brands Family carousel
+- Join Mayura Jewellers Insiders email capture · Explore Our Diamond Cuts (original SVG line art)
+- `/rishta-plan` — 11+1 savings plan with interactive calculator (`src/data/rishta.js`)
+- `/video-consultation` — 4-step consultation request flow (`consultationService`)
+- `/reviews` — alias of the testimonials page
+
+**Product experience**
+- Product Details + Price Breakup tabs on every PDP (breakup consumes `product.priceBreakup`
+  when real component pricing exists; until then it shows an honest "confirmed at billing" state)
+- Gold purity & shade selector (`product.goldOptions` data model; variants flow into the cart line)
+- New jewellery-type filters (Jhumkas, Hoops, Pendant Sets, Maang Tikka, Nath, Idols, Gold Coin/Bar…)
+  driven by predicates in `src/data/products.js` — styles with zero pieces auto-hide
+
+**Behaviour**
+- Navbar dropdowns are click-driven (toggle, outside-click, Escape); "All Jewellery" is now the
+  "Mayura" home item; service strip moved onto the royal ground and is always visible
+- First-visit engagement: branded notification pre-permission modal first, then the sign-in /
+  register modal (mock `authService`, SHA-256 digest only, never plain passwords) — each at most
+  once per browser, never on cart/checkout/consultation/auth pages
+- Hero carousel now supports touch swipe
+
+**Removed at client request**
+- Repairs & Polishing (service strip, legacy services, FAQ), "Gold collections" column in the
+  Gold menu, and all "Free Care For Life" claims
+
+**Frontend-only services** live in `src/services/` (`authService`, `newsletterService`,
+`notificationService`, `consultationService`). Each file marks its FUTURE API INTEGRATION POINT —
+swap the body for a fetch call when the backend arrives; no UI changes needed.
+
+**Awaiting client input:** founder portrait (`FounderSection.jsx`), official brand-family logos
+(`src/data/homepage.js`), promises 3–7 wording, final Rishta Plan terms, dedicated coin/idol
+photography, real reviews to replace the demo testimonials.

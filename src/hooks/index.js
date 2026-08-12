@@ -1,34 +1,54 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 /* --------------------------------------------------------------------------
-   useScrollPosition — y offset plus a "past threshold" flag for the navbar.
+   useScrollPosition — a "past threshold" flag for the navbar, with hysteresis.
+
+   `threshold` is either a number (legacy: enter == exit) or `{ enter, exit }`.
+   Hysteresis matters for any sticky header that changes its own height:
+   collapsing the header shifts layout, the browser's scroll anchoring nudges
+   scrollY, and with a single threshold that nudge can flip the state straight
+   back — an expand/compact feedback loop that reads as vibration. Keeping the
+   enter point comfortably above the exit point (by more than the header's
+   height delta) makes every state change one-way and stable.
+
+   State is only committed when the derived values actually change, so the
+   header never re-renders per scrolled pixel.
    -------------------------------------------------------------------------- */
 export function useScrollPosition(threshold = 24) {
-  const [state, setState] = useState({ y: 0, scrolled: false, direction: 'up' })
+  const { enter, exit } =
+    typeof threshold === 'number' ? { enter: threshold, exit: threshold } : threshold
+
+  const [state, setState] = useState({ scrolled: false, direction: 'up' })
   const lastY = useRef(0)
 
   useEffect(() => {
     let frame = null
+
     const onScroll = () => {
       if (frame) return
       frame = window.requestAnimationFrame(() => {
-        const y = window.scrollY
-        setState({
-          y,
-          scrolled: y > threshold,
-          direction: y > lastY.current && y > 120 ? 'down' : 'up',
-        })
-        lastY.current = y
         frame = null
+        const y = window.scrollY
+        const direction = y > lastY.current && y > 120 ? 'down' : 'up'
+        lastY.current = y
+
+        setState((current) => {
+          /* Hysteresis: enter compact above `enter`, leave it only below
+             `exit`; anywhere in between keeps the current state. */
+          const scrolled = current.scrolled ? y > exit : y > enter
+          if (scrolled === current.scrolled && direction === current.direction) return current
+          return { scrolled, direction }
+        })
       })
     }
+
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       window.removeEventListener('scroll', onScroll)
       if (frame) window.cancelAnimationFrame(frame)
     }
-  }, [threshold])
+  }, [enter, exit])
 
   return state
 }

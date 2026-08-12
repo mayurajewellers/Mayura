@@ -10,6 +10,7 @@ import cn from '@utils/cn'
  * and an optional quiet link on the right.
  */
 export default function SectionHeading({
+  id,
   eyebrow,
   title,
   lede,
@@ -48,6 +49,7 @@ export default function SectionHeading({
 
         <RevealHeading
           as={as}
+          id={id}
           text={title}
           className={cn(
             titleSize,

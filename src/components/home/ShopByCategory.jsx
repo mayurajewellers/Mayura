@@ -1,27 +1,31 @@
-import { DEPARTMENTS } from '@data/categories'
+import { SHOP_CATEGORIES } from '@data/homepage'
 import { ROUTES } from '@constants/routes'
 import SectionHeading from '@components/common/SectionHeading'
 import { CategoryCard } from '@components/cards/index.jsx'
 
+/**
+ * The six primary category windows, directly beneath the hero:
+ * Gold · Diamond · Gemstones · Italian · Gold Coins · Kids.
+ */
 export default function ShopByCategory() {
   return (
-    <section className="mj-section bg-ivory" aria-labelledby="shop-by-category">
+    <section className="mj-section-sm bg-ivory pt-10 lg:pt-14" aria-labelledby="shop-by-category">
       <div className="mj-container">
         <SectionHeading
           id="shop-by-category"
           eyebrow="Shop by category"
-          title="Six ways into the collection"
-          lede="Most people arrive knowing the occasion rather than the piece. Start where you are."
+          title="Find your perfect piece"
+          lede="Six ways into the collection — start with the metal, the stone, or the person it is for."
           align="center"
           flourish
-          className="mb-14 lg:mb-20"
+          className="mb-12 lg:mb-16"
           link={ROUTES.collection('all')}
           linkLabel="View everything"
         />
 
-        <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-14">
-          {DEPARTMENTS.map((department, index) => (
-            <CategoryCard key={department.slug} category={department} index={index} />
+        <div className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-6 md:grid-cols-3 lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6">
+          {SHOP_CATEGORIES.map((category, index) => (
+            <CategoryCard key={category.slug} category={category} index={index} />
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { ROUTES } from '@constants/routes'
-import { DEPARTMENTS, TYPES } from './categories'
+import { DEPARTMENTS } from './categories'
 import { COLLECTIONS } from './collections'
 
 /**
@@ -14,33 +14,16 @@ const collectionLinks = COLLECTIONS.map((c) => ({
   to: ROUTES.collection(c.slug),
 }))
 
-const typeLinks = TYPES.map((t) => ({ label: t.name, to: ROUTES.collection(t.slug) }))
-
-const departmentLinks = DEPARTMENTS.map((d) => ({
-  label: d.name,
-  meta: d.kicker,
-  to: ROUTES.collection(d.slug),
-}))
-
 export const CATEGORY_NAV = [
   {
-    label: 'All Jewellery',
+    /* The brand/home item — clicking it always returns to the homepage.
+       It deliberately carries no dropdown so the click is never intercepted.
+       (Renamed from "All Jewellery" at the client's request; the complete
+       catalogue remains reachable from every department menu below.) */
+    label: 'Mayura',
     icon: 'plume',
-    to: ROUTES.collection('all'),
-    mega: {
-      columns: [
-        { title: 'Shop by department', links: departmentLinks },
-        { title: 'Shop by piece', links: typeLinks },
-      ],
-      feature: {
-        eyebrow: 'In focus',
-        title: 'Anantara',
-        copy: 'Bridal heirlooms built to a weight that survives being handed down.',
-        image: '/images/editorial/bridal-polki-necklace.jpg',
-        to: ROUTES.collection('anantara'),
-        cta: 'Explore Anantara',
-      },
-    },
+    to: ROUTES.home,
+    home: true,
   },
   {
     label: 'Gold',
@@ -60,12 +43,12 @@ export const CATEGORY_NAV = [
           ],
         },
         {
-          title: 'Gold collections',
+          title: 'More in gold',
           links: [
-            { label: 'Kanaka', meta: 'Pure gold classics', to: ROUTES.collection('kanaka') },
-            { label: 'Vanaja', meta: 'Temple & antique', to: ROUTES.collection('vanaja') },
-            { label: 'Anantara', meta: 'Bridal heirloom', to: ROUTES.collection('anantara') },
-            { label: 'Chandrika', meta: 'Modern minimal', to: ROUTES.collection('chandrika') },
+            { label: 'Rings', to: ROUTES.collection('rings') },
+            { label: 'Pendants', to: ROUTES.collection('pendants') },
+            { label: 'Gold Coins & Bars', to: ROUTES.collection('gold-coins') },
+            { label: 'Rishta Plan', meta: '11 + 1 savings', to: ROUTES.rishtaPlan },
           ],
         },
       ],
@@ -337,9 +320,10 @@ export const CATEGORY_NAV = [
           links: [
             { label: 'Our Legacy', meta: 'Since 2004', to: ROUTES.legacy },
             { label: 'Our Story', to: ROUTES.about },
-            { label: 'Craftsmanship', to: `${ROUTES.about}#craftsmanship` },
+            { label: 'Customer Reviews', to: ROUTES.reviews },
             { label: 'Gallery', to: ROUTES.gallery },
-            { label: 'Testimonials', to: ROUTES.testimonials },
+            { label: 'Rishta Plan', meta: '11 + 1 savings', to: ROUTES.rishtaPlan },
+            { label: 'Video Consultation', to: ROUTES.videoConsultation },
             { label: 'Contact & Store', to: ROUTES.contact },
           ],
         },
@@ -371,8 +355,9 @@ export const CATEGORY_NAV = [
 export const SERVICE_LINKS = [
   { label: 'Free Gold Testing', to: `${ROUTES.legacy}#services` },
   { label: 'Free Gold Melting', to: `${ROUTES.legacy}#services` },
-  { label: 'Repairs & Polishing', to: `${ROUTES.legacy}#services` },
   { label: 'Home Visit Service', to: `${ROUTES.legacy}#services` },
+  { label: 'Video Consultation', to: ROUTES.videoConsultation },
+  { label: 'Rishta Plan 11+1', to: ROUTES.rishtaPlan },
   { label: 'BIS Hallmark Certified', to: `${ROUTES.faq}#purity-certification` },
 ]
 
@@ -403,6 +388,9 @@ export const FOOTER_COLUMNS = [
   {
     title: 'Support',
     links: [
+      { label: 'Video Consultation', to: ROUTES.videoConsultation },
+      { label: 'Rishta Plan 11+1', to: ROUTES.rishtaPlan },
+      { label: 'Customer Reviews', to: ROUTES.reviews },
       { label: 'Frequently Asked', to: ROUTES.faq },
       { label: 'Shipping Policy', to: ROUTES.shipping },
       { label: 'Return Policy', to: ROUTES.returns },

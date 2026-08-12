@@ -10,12 +10,13 @@
 
 @layer base {
   :root {
-    --mj-champagne: #b5a88d;
-    --mj-ivory: #f7f3ea;
-    --mj-charcoal: #292621;
+    --mj-royal: #004976; /* Pantone 7693 C — Mayura brand primary */
+    --mj-champagne: #b9cbd9;
+    --mj-ivory: #f7f4ec;
+    --mj-charcoal: #152836;
     --mj-gold: #d4af37;
     --mj-bronze: #8a6a3f;
-    --mj-espresso: #2b211c;
+    --mj-espresso: #00365a;
     --mj-nav-h: 5.5rem;
     --mj-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }

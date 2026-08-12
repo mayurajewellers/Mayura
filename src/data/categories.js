@@ -75,6 +75,40 @@ export const DEPARTMENTS = [
     coverImage: '/images/editorial/charms-evil-eye.jpg',
     accent: 'gold',
   },
+  {
+    slug: 'gemstones',
+    name: 'Gemstones',
+    kicker: 'Rubies, emeralds & more',
+    blurb: 'Natural coloured stones, independently certified, never sold on trust alone.',
+    longBlurb:
+      'Rubies, emeralds and polki set the traditional way — in closed settings over foil, or claw-set against hallmarked gold. Every significant stone carries independent certification.',
+    image: '/images/editorial/rings-gemstone-pastel.jpg',
+    coverImage: '/images/editorial/bridal-emerald-necklace.jpg',
+    accent: 'gold',
+  },
+  {
+    slug: 'italian-collection',
+    name: 'Italian Collection',
+    kicker: 'Machine-drawn precision',
+    blurb: 'Italian chain work — the lightest wearable gold made anywhere.',
+    longBlurb:
+      'Machine-drawn Italian links in weights hand work cannot reach. Rope, box, singapore and figaro patterns that fall like fabric and survive daily wear.',
+    image: '/images/styled/chain-gold-teal.jpg',
+    coverImage: '/images/styled/chain-gold-teal.jpg',
+    accent: 'gold',
+  },
+  {
+    slug: 'gold-coins',
+    name: 'Gold Coins',
+    kicker: 'Coins & bars',
+    /* TODO(client): replace with dedicated coin photography when available. */
+    image: '/images/editorial/gold-haram-velvet.jpg',
+    coverImage: '/images/editorial/gold-haram-velvet.jpg',
+    blurb: 'Hallmarked coins and bars for gifting, savings and ceremony.',
+    longBlurb:
+      'BIS hallmarked coins and bars in sealed assay packaging, billed transparently at the day’s rate with the making charge written on the invoice.',
+    accent: 'gold',
+  },
 ]
 
 export const TYPES = [
