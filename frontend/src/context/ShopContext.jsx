@@ -1,13 +1,12 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocalStorageState } from '@hooks/index'
 import { STORAGE_KEYS } from '@constants/routes'
 import { getProductById } from '@data/products'
+import authService from '@services/authService'
 
 /**
  * Client-side shop state — cart, wishlist, recently viewed and toasts.
- *
- * Everything lives in the browser's own localStorage. There is no backend,
- * no session and no network call anywhere in this provider.
+ * Scoped per user account so each user maintains their own cart & wishlist.
  */
 
 const ShopContext = createContext(null)
@@ -16,8 +15,93 @@ const CART_LIMIT = 20
 const RECENT_LIMIT = 8
 
 export function ShopProvider({ children }) {
-  const [cart, setCart] = useLocalStorageState(STORAGE_KEYS.cart, [])
-  const [wishlist, setWishlist] = useLocalStorageState(STORAGE_KEYS.wishlist, [])
+  const [currentUserEmail, setCurrentUserEmail] = useState(() => authService.currentUser()?.email || '')
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      const u = authService.currentUser()
+      setCurrentUserEmail(u?.email ? u.email.toLowerCase().trim() : '')
+    }
+    window.addEventListener('mayura:auth:changed', handleAuthChange)
+    window.addEventListener('storage', handleAuthChange)
+    return () => {
+      window.removeEventListener('mayura:auth:changed', handleAuthChange)
+      window.removeEventListener('storage', handleAuthChange)
+    }
+  }, [])
+
+  const userKey = currentUserEmail ? currentUserEmail.replace(/[^a-z0-9]/gi, '_') : 'guest'
+  const cartKey = `mayura.cart.${userKey}`
+  const wishlistKey = `mayura.wishlist.${userKey}`
+
+  const [cart, setCart] = useState(() => {
+    try {
+      const stored = window.localStorage.getItem(cartKey)
+      return stored ? JSON.parse(stored) : []
+    } catch {
+      return []
+    }
+  })
+
+  const [wishlist, setWishlist] = useState(() => {
+    try {
+      const stored = window.localStorage.getItem(wishlistKey)
+      return stored ? JSON.parse(stored) : []
+    } catch {
+      return []
+    }
+  })
+
+  // Sync state when active user changes (e.g. login/logout or account switch)
+  useEffect(() => {
+    try {
+      const userCartRaw = window.localStorage.getItem(cartKey)
+      let userCart = userCartRaw ? JSON.parse(userCartRaw) : []
+
+      // If user just logged in from guest session, merge guest items into user cart
+      if (userKey !== 'guest') {
+        const guestCartRaw = window.localStorage.getItem('mayura.cart.guest')
+        const guestCart = guestCartRaw ? JSON.parse(guestCartRaw) : []
+        if (guestCart.length > 0) {
+          const merged = [...userCart]
+          guestCart.forEach((gLine) => {
+            const matchIndex = merged.findIndex((l) => l.key === gLine.key)
+            if (matchIndex >= 0) {
+              merged[matchIndex].quantity = Math.min(merged[matchIndex].quantity + gLine.quantity, CART_LIMIT)
+            } else if (merged.length < CART_LIMIT) {
+              merged.push(gLine)
+            }
+          })
+          window.localStorage.setItem(cartKey, JSON.stringify(merged))
+          window.localStorage.removeItem('mayura.cart.guest')
+          userCart = merged
+        }
+      }
+
+      setCart(userCart)
+
+      const userWishlistRaw = window.localStorage.getItem(wishlistKey)
+      setWishlist(userWishlistRaw ? JSON.parse(userWishlistRaw) : [])
+    } catch (err) {
+      setCart([])
+      setWishlist([])
+    }
+  }, [userKey, cartKey, wishlistKey])
+
+  // Persist cart changes
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(cartKey, JSON.stringify(cart))
+    } catch (err) {}
+  }, [cart, cartKey])
+
+  // Persist wishlist changes
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(wishlistKey, JSON.stringify(wishlist))
+    } catch (err) {}
+  }, [wishlist, wishlistKey])
+
   const [recentlyViewed, setRecentlyViewed] = useLocalStorageState(STORAGE_KEYS.recentlyViewed, [])
   const [toasts, setToasts] = useState([])
 
