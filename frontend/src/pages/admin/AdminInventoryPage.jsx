@@ -70,9 +70,9 @@ export default function AdminInventoryPage() {
 
   const openAdjustModal = (product) => {
     setSelectedProduct(product)
-    setAdjustmentType('ADD')
-    setQuantityInput('')
-    setReasonInput('New stock received')
+    setAdjustmentType('SET')
+    setQuantityInput(String(product.inventoryQuantity ?? 0))
+    setReasonInput('Stock audit')
     setFeedback('')
     setShowHistory(false)
   }
@@ -80,6 +80,12 @@ export default function AdminInventoryPage() {
   const handleAdjustStock = async (e) => {
     e.preventDefault()
     if (!selectedProduct) return
+    const targetId = selectedProduct._id || selectedProduct.id
+    if (!targetId) {
+      setFeedback('Invalid product selection.')
+      return
+    }
+
     const q = parseInt(quantityInput, 10)
     if (isNaN(q) || q < 0) {
       setFeedback('Please enter a valid non-negative quantity.')
@@ -89,22 +95,46 @@ export default function AdminInventoryPage() {
     setAdjusting(true)
     setFeedback('')
 
-    const res = await adminInventoryService.adjustStock(selectedProduct._id, {
+    const res = await adminInventoryService.adjustStock(targetId, {
       adjustmentType,
       quantity: q,
       reason: reasonInput,
     })
 
     if (res.success && res.data) {
-      setFeedback(`Stock updated! New stock: ${res.data.product?.inventoryQuantity} units.`)
+      const updatedProduct = res.data.product || {}
+      const newQty = updatedProduct.inventoryQuantity !== undefined ? updatedProduct.inventoryQuantity : q
+      const newStatus = updatedProduct.stockStatus || 'IN_STOCK'
+      const newInStock = updatedProduct.inStock !== undefined ? updatedProduct.inStock : newQty > 0
+
+      setFeedback(`Stock updated successfully! New stock level: ${newQty} units.`)
       fetchInventory()
-      // Update selected product state in modal
-      setSelectedProduct((prev) => ({
-        ...prev,
-        inventoryQuantity: res.data.product?.inventoryQuantity,
-        inStock: res.data.product?.inStock,
-        stockStatus: res.data.product?.stockStatus,
-      }))
+
+      // Immediately sync table list row
+      setInventory((prev) =>
+        prev.map((item) =>
+          (item._id === targetId || item.id === targetId)
+            ? {
+                ...item,
+                inventoryQuantity: newQty,
+                stockStatus: newStatus,
+                inStock: newInStock,
+              }
+            : item,
+        ),
+      )
+
+      // Update active modal product snapshot
+      setSelectedProduct((prev) =>
+        prev
+          ? {
+              ...prev,
+              inventoryQuantity: newQty,
+              inStock: newInStock,
+              stockStatus: newStatus,
+            }
+          : null,
+      )
     } else {
       setFeedback(res.message || 'Failed to adjust stock.')
     }
@@ -472,6 +502,31 @@ export default function AdminInventoryPage() {
                     onChange={(e) => setQuantityInput(e.target.value)}
                     className="w-full rounded-luxe border border-charcoal/20 bg-white p-3 text-body-xs text-charcoal focus:border-gold focus:outline-none"
                   />
+                  {/* Live Calculation Preview Banner */}
+                  {(() => {
+                    const currentQty = selectedProduct.inventoryQuantity ?? 0
+                    const inputQty = parseInt(quantityInput, 10)
+                    const isValid = !isNaN(inputQty) && inputQty >= 0
+
+                    let predicted = currentQty
+                    if (isValid) {
+                      if (adjustmentType === 'ADD') predicted = currentQty + inputQty
+                      else if (adjustmentType === 'REMOVE') predicted = Math.max(0, currentQty - inputQty)
+                      else if (adjustmentType === 'SET') predicted = inputQty
+                    }
+
+                    return (
+                      <div className="mt-2 rounded-lg border border-gold/30 bg-gold/5 p-2.5 flex items-center justify-between text-body-xs font-sans">
+                        <span className="text-charcoal-200">
+                          Current: <strong className="text-charcoal">{currentQty}</strong>
+                        </span>
+                        <span className="text-bronze font-bold">➔</span>
+                        <span className="text-charcoal font-bold">
+                          New Stock Level: <span className="text-bronze underline">{isValid ? predicted : currentQty} units</span>
+                        </span>
+                      </div>
+                    )
+                  })()}
                 </div>
 
                 <div>
