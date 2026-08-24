@@ -1,0 +1,174 @@
+[
+  {
+    "key": "hero",
+    "type": "hero",
+    "title": "Hero Banner Carousel",
+    "subtitle": "Main storefront slider",
+    "displayOrder": 1,
+    "isActive": true,
+    "items": [
+      {
+        "id": "bridal",
+        "eyebrow": "The bridal atelier",
+        "title": "Made by hand.",
+        "titleAccent": "Kept for generations.",
+        "copy": "Hallmarked 22K harams, polki chokers and matched suites — eight to fourteen weeks on the bench, fitted three times before they leave.",
+        "cta": { "label": "Explore Bridal", "to": "/collections/bridal-collection" },
+        "secondary": { "label": "Book a consultation", "to": "/contact" },
+        "image": "/images/hero/mayura-hero-01.jpg",
+        "imagePosition": "62% 22%",
+        "panel": "bg-espresso text-ivory",
+        "tone": "light"
+      },
+      {
+        "id": "assurance",
+        "eyebrow": "Free at our counter",
+        "title": "Gold testing.",
+        "titleAccent": "Melting. Valuation.",
+        "copy": "Bring in any gold, from anywhere. We will test its purity on the XRF while you watch, melt it or value it — at no charge, whether you bought it here or not.",
+        "cta": { "label": "See our services", "to": "/our-legacy#services" },
+        "secondary": { "label": "Book a home visit", "to": "/contact" },
+        "image": "/images/hero/mayura-hero-02.jpg",
+        "imagePosition": "58% 24%",
+        "panel": "bg-champagne text-espresso",
+        "tone": "dark"
+      },
+      {
+        "id": "diamond",
+        "eyebrow": "IGI & GIA certified",
+        "title": "One stone,",
+        "titleAccent": "chosen slowly.",
+        "copy": "We will put four diamonds on a tray at four price points, hand you a loupe, and explain honestly what separates them before anybody mentions money.",
+        "cta": { "label": "View Solaire", "to": "/collections/solaire" },
+        "secondary": { "label": "Diamond guide", "to": "/journal/diamond-grades-that-matter" },
+        "image": "/images/editorial/mayura-hero-06.jpg",
+        "imagePosition": "64% 26%",
+        "panel": "bg-ivory-300 text-charcoal",
+        "tone": "dark"
+      },
+      {
+        "id": "legacy",
+        "eyebrow": "Kandivali East · Since 2004",
+        "title": "Three generations.",
+        "titleAccent": "One counter.",
+        "copy": "The largest jewellery showroom in Kandivali — 1,350 sq ft, seventeen people, and a family that has weighed gold across a counter since before most of them were born.",
+        "cta": { "label": "Read our legacy", "to": "/our-legacy" },
+        "secondary": { "label": "Visit the store", "to": "/contact" },
+        "image": "/images/editorial/mayura-hero-04.jpg",
+        "imagePosition": "center",
+        "panel": "bg-bronze-600 text-ivory",
+        "tone": "light"
+      },
+      {
+        "id": "daily",
+        "eyebrow": "Under twelve grams",
+        "title": "Light enough",
+        "titleAccent": "to forget.",
+        "copy": "Screwed backs, bezel settings and laser-welded links. Designed to survive a commute, a kitchen and a toddler — and still look like itself in ten years.",
+        "cta": { "label": "Shop Daily Wear", "to": "/collections/daily-wear" },
+        "secondary": { "label": "What actually survives", "to": "/journal/daily-wear-that-survives" },
+        "image": "/images/editorial/mayura-hero-05.jpg",
+        "imagePosition": "center",
+        "panel": "bg-ivory-500 text-charcoal",
+        "tone": "dark"
+      }
+    ]
+  },
+  {
+    "key": "shop-categories",
+    "type": "categories",
+    "title": "Shop by Category",
+    "subtitle": "Primary windows directly beneath the hero",
+    "displayOrder": 2,
+    "isActive": true,
+    "items": [
+      { "slug": "gold-jewellery", "name": "Gold Jewellery", "kicker": "22K & 18K hallmarked", "image": "/images/editorial/trousseau-gold-set.jpg" },
+      { "slug": "diamond-jewellery", "name": "Diamond Jewellery", "kicker": "IGI & GIA certified", "image": "/images/products/ring-white-gold-halo.jpg" },
+      { "slug": "gemstones", "name": "Gemstones", "kicker": "Rubies, emeralds & more", "image": "/images/editorial/rings-gemstone-pastel.jpg" },
+      { "slug": "italian-collection", "name": "Italian Collection", "kicker": "Machine-drawn precision", "image": "/images/styled/chain-gold-teal.jpg" },
+      { "slug": "gold-coins", "name": "Gold Coins", "kicker": "Coins & bars", "image": "/images/editorial/gold-haram-velvet.jpg" },
+      { "slug": "kids-collection", "name": "Kids", "kicker": "First jewels", "image": "/images/editorial/charms-evil-eye.jpg" }
+    ]
+  },
+  {
+    "key": "advantages",
+    "type": "advantages",
+    "title": "The Mayura Advantage",
+    "subtitle": "Customer commitments strip",
+    "displayOrder": 3,
+    "isActive": true,
+    "items": [
+      { "icon": "shield-check", "title": "BIS Hallmarked", "copy": "Six-digit HUID on every gold piece — verify it yourself on the BIS Care app." },
+      { "icon": "gem", "title": "Certified Diamonds", "copy": "IGI, GIA or SGL graded. The certificate travels with the piece." },
+      { "icon": "scale", "title": "Transparent Pricing", "copy": "Weight, rate, making charge and GST written down before you decide." },
+      { "icon": "repeat", "title": "Lifetime Exchange", "copy": "Gold back at the prevailing rate, for as long as you own it." },
+      { "icon": "undo", "title": "15-Day Returns", "copy": "Unworn pieces in original packaging, with certificate and invoice." },
+      { "icon": "video", "title": "Video Consultation", "copy": "See up to five designs live from home before you visit." }
+    ]
+  },
+  {
+    "key": "promises",
+    "type": "promises",
+    "title": "7 Mayura Promises",
+    "subtitle": "House guarantees",
+    "displayOrder": 4,
+    "isActive": true,
+    "items": [
+      { "n": "01", "icon": "badge-check", "title": "100% HUID Certified Hallmark Gold", "copy": "Every gold article carries the BIS lozenge, the purity grade and a six-digit HUID you can verify on the BIS Care app before you pay.", "approved": true },
+      { "n": "02", "icon": "gem", "title": "100% Natural Diamond Certified by IGI / GIA", "copy": "Only natural, independently graded diamonds. The certificate is handed over with the piece, without your asking.", "approved": true },
+      { "n": "03", "icon": "scale", "title": "Pricing Written Down First", "copy": "Net weight, rate, making charge and GST on paper before you decide — never after.", "approved": false },
+      { "n": "04", "icon": "repeat", "title": "Lifetime Exchange", "copy": "Exchange gold jewellery at the prevailing rate for as long as you own it, with deductions stated before you buy.", "approved": false },
+      { "n": "05", "icon": "flask", "title": "Free Gold Testing & Melting", "copy": "Any gold, from anywhere, tested on the XRF while you watch — free, whether or not you bought it here.", "approved": false },
+      { "n": "06", "icon": "truck", "title": "Insured Doorstep Delivery", "copy": "Signature-required, fully insured despatch across India on every order.", "approved": false },
+      { "n": "07", "icon": "heart-handshake", "title": "Honest Advice, Even Against Our Margin", "copy": "If the lighter set suits her better, we say so. We would rather keep the family than the sale.", "approved": false }
+    ]
+  },
+  {
+    "key": "brands-family",
+    "type": "brands",
+    "title": "Brands Family",
+    "subtitle": "Mayura Signature Collections as sub-brands",
+    "displayOrder": 5,
+    "isActive": true,
+    "items": [
+      { "key": "anantara", "name": "Anantara", "kicker": "Bridal Heirloom", "logo": null, "to": "/collections/anantara" },
+      { "key": "kanaka", "name": "Kanaka", "kicker": "Pure Gold Classics", "logo": null, "to": "/collections/kanaka" },
+      { "key": "vanaja", "name": "Vanaja", "kicker": "Temple & Antique", "logo": null, "to": "/collections/vanaja" },
+      { "key": "nilaya", "name": "Nilaya", "kicker": "Everyday Diamond", "logo": null, "to": "/collections/nilaya" },
+      { "key": "solaire", "name": "Solaire", "kicker": "Solitaires & Engagement", "logo": null, "to": "/collections/solaire" },
+      { "key": "chandrika", "name": "Chandrika", "kicker": "Modern Minimal", "logo": null, "to": "/collections/chandrika" }
+    ]
+  },
+  {
+    "key": "diamond-cuts",
+    "type": "cuts",
+    "title": "Explore Our Diamond Cuts",
+    "subtitle": "Popular cut shapes",
+    "displayOrder": 6,
+    "isActive": true,
+    "items": [
+      { "key": "emerald", "name": "Emerald" },
+      { "key": "oval", "name": "Oval" },
+      { "key": "cushion", "name": "Cushion" },
+      { "key": "round", "name": "Round" },
+      { "key": "princess", "name": "Princess" },
+      { "key": "pear", "name": "Pear" },
+      { "key": "marquise", "name": "Marquise" },
+      { "key": "heart", "name": "Heart" }
+    ]
+  },
+  {
+    "key": "insiders",
+    "type": "insiders",
+    "title": "Mayura Jewellers Insiders",
+    "subtitle": "Newsletter signup block",
+    "displayOrder": 7,
+    "isActive": true,
+    "content": {
+      "eyebrow": "Mayura Jewellers Insiders",
+      "heading": "Join Mayura Jewellers Insiders",
+      "copy": "Enticing deals, latest arrivals, new collections and quiet invitations to private viewings — before anyone else hears about them.",
+      "disclaimer": "Saved on this device for now — signups will reach the store once online services launch."
+    }
+  }
+]

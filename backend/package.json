@@ -1,0 +1,47 @@
+{
+  "name": "mayura-jewellers-backend",
+  "version": "1.0.0",
+  "description": "Mayura Jewellers — Express & MongoDB Backend API (v1)",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed:admin": "node src/seed/adminSeed.js",
+    "seed:products": "node src/seed/productSeed.js",
+    "seed:collections": "node src/seed/collectionSeed.js",
+    "seed:homepage": "node src/seed/homepageSeed.js",
+    "seed:banners": "node src/seed/bannerSeed.js",
+    "seed:blog": "node src/seed/blogSeed.js",
+    "seed:testimonials": "node src/seed/testimonialSeed.js",
+    "seed:gallery": "node src/seed/gallerySeed.js",
+    "seed:faq": "node src/seed/faqSeed.js",
+    "seed:policies": "node src/seed/policySeed.js",
+    "seed:settings": "node src/seed/settingsSeed.js",
+    "seed:pages": "node src/seed/pageSeed.js",
+    "seed:navigation": "node src/seed/navigationSeed.js"
+  },
+  "keywords": [
+    "mayura-jewellers",
+    "express",
+    "mongodb",
+    "mongoose",
+    "api"
+  ],
+  "author": "Mayura Jewellers",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.10.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

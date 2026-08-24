@@ -1,0 +1,158 @@
+[
+  {
+    "legacyId": "pol-001",
+    "slug": "terms-and-conditions",
+    "title": "Terms & Conditions",
+    "kicker": "Legal",
+    "updated": "2026-07-01T00:00:00.000Z",
+    "intro": "By entering into a transaction with Mayura Jewellers you are deemed to have read and accepted the terms and conditions below.",
+    "variant": "clauses",
+    "sections": [
+      {
+        "heading": "Purity & Identification",
+        "paragraphs": [
+          "We manufacture Gold Ornaments of 22kt, 18kt, 14kt Purity, and our Ornaments bear the identification mark of our company."
+        ]
+      },
+      {
+        "heading": "Refund & Exchange",
+        "paragraphs": [
+          "Once sold, refund will not be made under any circumstances. The customer however can exchange ornaments sold within 1 week provided it is unused. In such case original Invoice must be produced for the exchange.",
+          "However, the value of making charges and any other incidental charges incurred in respect of any ornament manufactured as per customer’s order cannot be adjusted in case of exchange."
+        ]
+      },
+      {
+        "heading": "Contact us about this policy",
+        "paragraphs": [
+          "Mayura Jewellers, Shop No. 12, 13, 14, Rangoli Building, Vasant Utsav, Thakur Village, Mumbai, MH 400101, India",
+          "Proprietor: Darshil Bhandari",
+          "Email: mayurajewellers2019@gmail.com · Telephone / WhatsApp: +91 91675 89002",
+          "We respond to written queries within three working days."
+        ]
+      }
+    ],
+    "displayOrder": 1,
+    "isActive": true,
+    "seo": {
+      "metaTitle": "Terms & Conditions — Mayura Jewellers",
+      "metaDescription": "Terms & Conditions of Mayura Jewellers",
+      "keywords": [
+        "terms",
+        "legal",
+        "mayura"
+      ]
+    }
+  },
+  {
+    "legacyId": "pol-002",
+    "slug": "privacy-policy",
+    "title": "Privacy Policy",
+    "kicker": "Legal",
+    "updated": "2026-07-01T00:00:00.000Z",
+    "intro": "This policy explains what personal information Mayura Jewellers collects, why we collect it, how long we keep it and what you can ask us to do with it.",
+    "variant": "sections",
+    "sections": [
+      {
+        "heading": "1. What this website collects",
+        "paragraphs": [
+          "This website is a showcase. Wishlist and cart contents stay in your browser local storage."
+        ]
+      },
+      {
+        "heading": "Contact us about this policy",
+        "paragraphs": [
+          "Mayura Jewellers, Shop No. 12, 13, 14, Rangoli Building, Vasant Utsav, Thakur Village, Mumbai, MH 400101, India",
+          "Proprietor: Darshil Bhandari",
+          "Email: mayurajewellers2019@gmail.com · Telephone / WhatsApp: +91 91675 89002",
+          "We respond to written queries within three working days."
+        ]
+      }
+    ],
+    "displayOrder": 2,
+    "isActive": true,
+    "seo": {
+      "metaTitle": "Privacy Policy — Mayura Jewellers",
+      "metaDescription": "Privacy Policy of Mayura Jewellers",
+      "keywords": [
+        "privacy",
+        "legal",
+        "mayura"
+      ]
+    }
+  },
+  {
+    "legacyId": "pol-003",
+    "slug": "shipping-policy",
+    "title": "Shipping Policy",
+    "kicker": "Support",
+    "updated": "2026-07-01T00:00:00.000Z",
+    "intro": "How your order is packed, insured, despatched and delivered — and what to do if something goes wrong on the way.",
+    "variant": "sections",
+    "sections": [
+      {
+        "heading": "1. Where we deliver",
+        "paragraphs": [
+          "We deliver to all serviceable pin codes across India."
+        ]
+      },
+      {
+        "heading": "Contact us about this policy",
+        "paragraphs": [
+          "Mayura Jewellers, Shop No. 12, 13, 14, Rangoli Building, Vasant Utsav, Thakur Village, Mumbai, MH 400101, India",
+          "Proprietor: Darshil Bhandari",
+          "Email: mayurajewellers2019@gmail.com · Telephone / WhatsApp: +91 91675 89002",
+          "We respond to written queries within three working days."
+        ]
+      }
+    ],
+    "displayOrder": 3,
+    "isActive": true,
+    "seo": {
+      "metaTitle": "Shipping Policy — Mayura Jewellers",
+      "metaDescription": "Shipping Policy of Mayura Jewellers",
+      "keywords": [
+        "shipping",
+        "delivery",
+        "mayura"
+      ]
+    }
+  },
+  {
+    "legacyId": "pol-004",
+    "slug": "return-policy",
+    "title": "Return, Exchange & Buyback Policy",
+    "kicker": "Support",
+    "updated": "2026-07-01T00:00:00.000Z",
+    "intro": "What you can return, what you can exchange, what we will buy back, and exactly what is deducted in each case.",
+    "variant": "sections",
+    "sections": [
+      {
+        "heading": "1. Fifteen-day return",
+        "paragraphs": [
+          "Ready-stock articles may be returned within fifteen days of delivery for a full refund."
+        ]
+      },
+      {
+        "heading": "Contact us about this policy",
+        "paragraphs": [
+          "Mayura Jewellers, Shop No. 12, 13, 14, Rangoli Building, Vasant Utsav, Thakur Village, Mumbai, MH 400101, India",
+          "Proprietor: Darshil Bhandari",
+          "Email: mayurajewellers2019@gmail.com · Telephone / WhatsApp: +91 91675 89002",
+          "We respond to written queries within three working days."
+        ]
+      }
+    ],
+    "displayOrder": 4,
+    "isActive": true,
+    "seo": {
+      "metaTitle": "Return Policy — Mayura Jewellers",
+      "metaDescription": "Return, Exchange & Buyback Policy of Mayura Jewellers",
+      "keywords": [
+        "returns",
+        "exchange",
+        "buyback",
+        "mayura"
+      ]
+    }
+  }
+]

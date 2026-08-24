@@ -1,0 +1,199 @@
+[
+  {
+    "legacyId": "page-001",
+    "slug": "about",
+    "title": "Notes from the Workshop",
+    "eyebrow": "Our Story",
+    "subtitle": "Fine Gold & Diamond Jewellery",
+    "lede": "Hallmarked 22K and 18K gold, certified diamonds and bridal heirlooms, made by hand for the families of Thakur Village and beyond.",
+    "sections": [
+      {
+        "heading": "Our Meaning",
+        "content": "Mayura is the Sanskrit word for peacock — a creature that has stood for grace, renewal and quiet splendour in Indian art for three thousand years."
+      },
+      {
+        "heading": "Owner Message",
+        "owner": {
+          "name": "Darshil Bhandari",
+          "role": "Founder & Proprietor",
+          "message": "My family has weighed gold across a counter for three generations. What I wanted for Mayura was simpler than a shop — a room where a mother could bring her daughter, ask every question she liked, and leave holding something she would still be proud of in thirty years. Every piece we sell is hallmarked, every diamond is certified, and every rate is written down before you decide. That is the whole promise."
+        }
+      },
+      {
+        "heading": "Why Choose Us",
+        "items": [
+          {
+            "title": "Complete transparency",
+            "copy": "Every number that makes up a price is knowable, and we write all of them down before you commit to anything."
+          },
+          {
+            "title": "Fair and honest pricing",
+            "copy": "The same rate for everybody, on the board, every morning. Nobody here works on commission."
+          },
+          {
+            "title": "Individual attention to every buyer",
+            "copy": "A ₹20,000 pair of studs gets the same tray, the same tea and the same hour as a five-lakh bridal suite."
+          },
+          {
+            "title": "An unmatched shopping experience",
+            "copy": "Seventeen people, seating for everyone, and nobody standing over you while you decide."
+          }
+        ]
+      }
+    ],
+    "isActive": true,
+    "seo": {
+      "metaTitle": "Our Story — Mayura Jewellers",
+      "metaDescription": "Hallmarked 22K and 18K gold, certified diamonds and bridal heirlooms, made by hand for the families of Thakur Village and beyond.",
+      "keywords": [
+        "about",
+        "mayura",
+        "story"
+      ]
+    }
+  },
+  {
+    "legacyId": "page-002",
+    "slug": "legacy",
+    "title": "Twenty-two years on one corner of Kandivali",
+    "eyebrow": "A legacy of trust & brilliance since 2004",
+    "subtitle": "A legacy of trust & brilliance since 2004",
+    "lede": "Located in the heart of Kandivali (East), Mumbai, Mayura Jewellers has been a symbol of trust, quality and excellence in jewellery since its inception in 2004. Situated in the vibrant Thakur Village, we have built a reputation for offering timeless treasures and unmatched service for over two decades.",
+    "sections": [
+      {
+        "heading": "Specialities",
+        "items": [
+          {
+            "icon": "chain",
+            "title": "Lightweight Everyday Jewellery",
+            "copy": "Under twelve grams, secure findings, finishes that survive perfume and a commute.",
+            "to": "daily-wear"
+          },
+          {
+            "icon": "wedding",
+            "title": "Exclusive Bridal Collections",
+            "copy": "Harams, polki chokers and matched suites, planned as a whole trousseau rather than a single piece.",
+            "to": "bridal-collection"
+          },
+          {
+            "icon": "necklace",
+            "title": "Italian Imported Jewellery",
+            "copy": "Machine-drawn Italian chain work — the lightest wearable gold made anywhere.",
+            "to": "chains"
+          },
+          {
+            "icon": "gemstone",
+            "title": "Natural Gemstones, Certified",
+            "copy": "Rubies, emeralds and sapphires supplied with independent certification, never sold on trust alone.",
+            "to": "diamond-jewellery"
+          },
+          {
+            "icon": "ring",
+            "title": "Customised & Designer Pieces",
+            "copy": "Bring a photograph, a sketch or a piece to rework. CAD render and quotation within a week.",
+            "to": "solaire"
+          },
+          {
+            "icon": "gold",
+            "title": "Pure Gold Classics",
+            "copy": "22K in the shapes that have not changed in fifty years, at our lowest making charges.",
+            "to": "kanaka"
+          }
+        ]
+      },
+      {
+        "heading": "Services",
+        "items": [
+          {
+            "icon": "scan",
+            "title": "Free Gold Testing",
+            "copy": "Bring in any gold, from anywhere. We put it on the XRF analyser and read the purity off the display while you watch. No charge, no obligation, whether or not you bought it here."
+          },
+          {
+            "icon": "flame",
+            "title": "Free Gold Melting",
+            "copy": "Old, broken or unwearable pieces melted down in front of you, weighed before and after, and credited at that day’s rate for the purity read."
+          },
+          {
+            "icon": "home",
+            "title": "Home Visit Service",
+            "copy": "Across Mumbai, by appointment. A member of our team brings a selection to you, stays with it throughout, and takes it away again if nothing suits."
+          },
+          {
+            "icon": "video",
+            "title": "Video Consultation",
+            "copy": "Choose up to five designs online and see them live on a video call with a jewellery expert before you visit the store."
+          }
+        ]
+      },
+      {
+        "heading": "Hallmarking Assurance",
+        "items": [
+          {
+            "title": "Self-certified hallmarking with our brand logo",
+            "copy": "Every article carries the BIS lozenge, the purity grade and our own maker’s mark — so you can tell at a glance where a piece came from, years later."
+          },
+          {
+            "title": "A unique HUID on every piece",
+            "copy": "Six alphanumeric characters, unique to that one article. Verify it yourself on the BIS Care app before you pay. We will hand you your phone and wait."
+          },
+          {
+            "title": "Full transparency in purity and pricing",
+            "copy": "Net weight, the day’s rate, making charges and GST — written out on paper and handed over before you decide anything."
+          }
+        ]
+      },
+      {
+        "heading": "Showroom Statistics",
+        "stats": [
+          {
+            "value": "2004",
+            "label": "Serving Kandivali since"
+          },
+          {
+            "value": "3rd",
+            "label": "Generation of the family"
+          },
+          {
+            "value": "1,350",
+            "label": "Square feet of showroom"
+          },
+          {
+            "value": "17",
+            "label": "People on the team"
+          }
+        ]
+      },
+      {
+        "heading": "Digital Channels",
+        "items": [
+          {
+            "icon": "instagram",
+            "title": "Instagram & Facebook",
+            "copy": "New arrivals, finished commissions and the occasional photograph from the workshop floor."
+          },
+          {
+            "icon": "whatsapp",
+            "title": "WhatsApp",
+            "copy": "The fastest way to reach us. Send a photograph of what you have in mind and we will quote a weight, a price and a date."
+          },
+          {
+            "icon": "directory",
+            "title": "JustDial & local directories",
+            "copy": "Find us, read what customers have written, and get directions to the Rangoli Building."
+          }
+        ]
+      }
+    ],
+    "isActive": true,
+    "seo": {
+      "metaTitle": "Our Legacy — Mayura Jewellers",
+      "metaDescription": "Located in the heart of Kandivali (East), Mumbai, Mayura Jewellers has been a symbol of trust, quality and excellence in jewellery since its inception in 2004. Situated in the vibrant Thakur Village, we have built a reputation for offering timeless treasures and unmatched service for over two decades.",
+      "keywords": [
+        "legacy",
+        "kandivali",
+        "heritage"
+      ]
+    }
+  }
+]

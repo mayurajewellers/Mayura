@@ -1,0 +1,532 @@
+[
+  {
+    "legacyId": "faq-001",
+    "question": "Is all your gold jewellery BIS hallmarked?",
+    "answer": "Yes. Every gold article we sell carries the BIS mark, the purity grade (916 for 22K, 750 for 18K), and a six-digit alphanumeric HUID. You can verify that HUID yourself on the BIS Care app before you leave the counter — we will wait while you do it. We do not sell unhallmarked gold in any weight, including children's pieces.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 1,
+    "isFeatured": true,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-002",
+    "question": "What is the difference between 22K and 18K gold?",
+    "answer": "22K is 91.6% pure gold and 18K is 75% pure. 22K is richer in colour and holds its value better on exchange, which is why traditional Indian jewellery is made in it. 18K is harder, so it holds stones far more securely — that is why almost all diamond jewellery is made in 18K. Neither is \"better\"; they are for different jobs.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 2,
+    "isFeatured": true,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-003",
+    "question": "What is the difference between gross weight and net weight?",
+    "answer": "Gross weight is everything on the scale — gold, stones, enamel, the lot. Net weight is the gold alone, once stone and non-gold weight is deducted. You are charged for gold at net weight and for stones separately. Both figures are printed on every invoice we issue, and both are shown on every product page on this site.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 3,
+    "isFeatured": true,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-004",
+    "question": "How is the final price of a piece calculated?",
+    "answer": "Four components: (1) net gold weight × the day's rate for that purity, (2) making charges, quoted either as a percentage of gold value or a flat rate per gram, (3) the value of any stones, and (4) GST at 3% on the total. Hallmarking charges are included. We will write the whole calculation out on paper if you ask — most customers do, and we prefer it.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 4,
+    "isFeatured": true,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-005",
+    "question": "Do your product photographs show the actual piece?",
+    "answer": "Photographs are of the design, shot under studio lighting. Because every piece is finished by hand, small variations in finish, stone placement and weight are normal and are part of what makes handmade jewellery handmade. Weights on the site are indicative to within ±3%; the exact weight of your piece is on your invoice.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 5,
+    "isFeatured": true,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-006",
+    "question": "Do you sell lab-grown diamonds?",
+    "answer": "We stock natural diamonds by default and label them as such. We will source certified lab-grown stones on request, priced accordingly, and the certificate will state clearly that the stone is laboratory-grown. What we will not do is sell you one without telling you.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 6,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-007",
+    "question": "Do you buy old gold, and how is it valued?",
+    "answer": "Yes. Old gold is tested on an XRF machine in front of you, the purity is read off the display, and the value is calculated at that day's rate for that purity, less any refining loss on articles below 916. We do not accept gold without an invoice or a hallmark for exchange against a new purchase — we will still test and value it, but we will explain the deduction first.",
+    "category": "General Merchandise",
+    "categoryId": "general",
+    "displayOrder": 7,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-008",
+    "question": "What is a HUID and where do I find it on my jewellery?",
+    "answer": "HUID stands for Hallmark Unique Identification — a six-digit alphanumeric code laser-marked on each hallmarked article, unique to that piece. On a ring it is usually inside the shank; on a chain, on the clasp tag; on a necklace, on the reverse of the clasp or a soldered tag. It is small — bring it to us and we will show you under the loupe.",
+    "category": "Gold Purity & Diamond Certification",
+    "categoryId": "purity-certification",
+    "displayOrder": 8,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-009",
+    "question": "How do I verify my HUID independently?",
+    "answer": "Download the BIS Care app (free, on Android and iOS), open \"Verify HUID\", and enter the six characters. It will return the article type, purity, the jeweller's registration number and the assaying centre. If any of it does not match your invoice, tell us immediately and we will resolve it.",
+    "category": "Gold Purity & Diamond Certification",
+    "categoryId": "purity-certification",
+    "displayOrder": 9,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-010",
+    "question": "Who certifies your diamonds?",
+    "answer": "Solitaires above 0.30 ct are certified by GIA or IGI. Smaller melee and pavé work is certified by IGI or SGL at the lot level. The physical certificate is handed over with the piece and the report number is printed on your invoice. Larger centre stones are laser-inscribed on the girdle with the report number, visible under 10× magnification.",
+    "category": "Gold Purity & Diamond Certification",
+    "categoryId": "purity-certification",
+    "displayOrder": 10,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-011",
+    "question": "What do the diamond grades on your product pages mean?",
+    "answer": "Colour runs D (colourless) to Z (tinted); we stock D–H. Clarity runs FL/IF, VVS1–2, VS1–2, SI1–2, I1–3; we stock down to SI, and label it honestly. In a piece under half a carat, colour matters more to the eye than clarity. Above a carat, the reverse. We would rather explain that than upsell you.",
+    "category": "Gold Purity & Diamond Certification",
+    "categoryId": "purity-certification",
+    "displayOrder": 11,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-012",
+    "question": "Will you give me a valuation certificate for insurance?",
+    "answer": "Yes, free of charge, at the time of purchase and again any time you ask. The valuation states current replacement value, which is not the same as your purchase price and will change with the gold rate. Most insurers want it re-issued every three years.",
+    "category": "Gold Purity & Diamond Certification",
+    "categoryId": "purity-certification",
+    "displayOrder": 12,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-013",
+    "question": "What if I suspect my piece is not the purity stated?",
+    "answer": "Bring it in. We will test it on the XRF in front of you at no charge, whether or not you bought it here. If a piece we sold you tests below its stated purity, we will replace it and refund the difference in full, without argument.",
+    "category": "Gold Purity & Diamond Certification",
+    "categoryId": "purity-certification",
+    "displayOrder": 13,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-014",
+    "question": "Which areas do you deliver to?",
+    "answer": "We deliver across India. Within Mumbai, Thane and Navi Mumbai we can hand-deliver by appointment. Elsewhere in India we use insured, signature-required courier. We do not ship internationally at present.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 14,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-015",
+    "question": "How long will my order take?",
+    "answer": "In-stock pieces are dispatched within 2–4 working days and typically reach you in 3–7 working days. Made-to-order pieces take 3–5 weeks. Bridal commissions take 8–14 weeks, and we will give you a date in writing before you pay a deposit.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 15,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-016",
+    "question": "What does delivery cost?",
+    "answer": "Free on every order above ₹25,000, which is the overwhelming majority. Below that, a flat ₹250 covers insured despatch anywhere in India. There is no charge for hand delivery within Mumbai.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 16,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-017",
+    "question": "Is my parcel insured in transit?",
+    "answer": "Yes, at full declared value, from the moment it leaves our counter until it is signed for. The parcel is unbranded and gives no indication of its contents. If it is lost or damaged in transit, that is our loss and not yours.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 17,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-018",
+    "question": "Can somebody else accept delivery for me?",
+    "answer": "Yes, provided you tell us in advance and they can produce a photo ID matching the name you give. For orders above ₹2,00,000 we require the person named on the invoice to accept delivery personally, or to collect from the store.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 18,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-019",
+    "question": "What should I check before signing for a parcel?",
+    "answer": "Check that the tamper-evident seal is intact and the parcel weight matches the label. If the seal is broken or the packaging is damaged, refuse the delivery and call us on +91 91675 89002 immediately. Do not accept it and open it later — once signed for, a broken seal is much harder to resolve.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 19,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-020",
+    "question": "Can I collect from the store instead?",
+    "answer": "Always, and we prefer it. Order online, choose store collection, and we will have the piece cleaned, boxed and waiting. Bring the order confirmation and a photo ID.",
+    "category": "Delivery & Shipment",
+    "categoryId": "delivery",
+    "displayOrder": 20,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-021",
+    "question": "Is the gold rate on the site live?",
+    "answer": "The rate shown is updated each business morning and holds for that day. Because the price of a gold piece is calculated at the rate on the day of billing, the amount confirmed at checkout is the amount you pay — it will not move afterwards, even if the rate does.",
+    "category": "Online Purchase",
+    "categoryId": "online-purchase",
+    "displayOrder": 21,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-022",
+    "question": "Can I change or cancel an order after placing it?",
+    "answer": "In-stock orders can be changed or cancelled free of charge until they are dispatched. Once dispatched, our return policy applies. Made-to-order and bridal pieces can be cancelled within 48 hours of confirmation; after that, work has started and the deposit is adjusted against the making charge already incurred.",
+    "category": "Online Purchase",
+    "categoryId": "online-purchase",
+    "displayOrder": 22,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-023",
+    "question": "Can I see a piece before I commit to buying it?",
+    "answer": "Yes. Book a viewing at the store and we will have it on the tray when you arrive. For bridal commissions we will show you a wax or a silver sample before any gold is cut.",
+    "category": "Online Purchase",
+    "categoryId": "online-purchase",
+    "displayOrder": 23,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-024",
+    "question": "Do you offer a try-at-home service?",
+    "answer": "Within Kandivali, Borivali, Malad and Thakur Village, yes — for selected daily-wear and diamond pieces, by appointment. A member of our team stays with the pieces throughout. Call us to arrange it.",
+    "category": "Online Purchase",
+    "categoryId": "online-purchase",
+    "displayOrder": 24,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-025",
+    "question": "How do I track my order?",
+    "answer": "You will receive a tracking link by SMS and email at dispatch. You can also simply WhatsApp us on +91 91675 89002 with your order number and we will tell you where it is.",
+    "category": "Online Purchase",
+    "categoryId": "online-purchase",
+    "displayOrder": 25,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-026",
+    "question": "What if the piece I want is out of stock?",
+    "answer": "Almost everything can be remade. Tell us the design and your size and we will quote a delivery date — usually three to five weeks. Prices are confirmed at the rate on the day of billing, not the day of order.",
+    "category": "Online Purchase",
+    "categoryId": "online-purchase",
+    "displayOrder": 26,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-027",
+    "question": "Which payment methods do you accept?",
+    "answer": "UPI, NEFT/RTGS/IMPS bank transfer, all major credit and debit cards, and cash within the legal limit. For bridal orders we work on a deposit-and-balance basis, with the balance due before despatch.",
+    "category": "Payments",
+    "categoryId": "payments",
+    "displayOrder": 27,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-028",
+    "question": "Is there a cash limit?",
+    "answer": "Yes. Under Section 269ST of the Income Tax Act we cannot accept ₹2,00,000 or more in cash in a single transaction, from a single person, in a single day. Above that, payment must be by bank transfer, card or UPI.",
+    "category": "Payments",
+    "categoryId": "payments",
+    "displayOrder": 28,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-029",
+    "question": "Do you charge GST, and at what rate?",
+    "answer": "3% GST on gold and diamond jewellery, and 5% on making charges where these are billed separately. Both are shown as separate lines on your invoice — we do not fold tax into a headline price.",
+    "category": "Payments",
+    "categoryId": "payments",
+    "displayOrder": 29,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-030",
+    "question": "Do you offer EMI?",
+    "answer": "Yes, on credit cards from most major banks, typically over 3, 6, 9 or 12 months. Interest, if any, is set by your bank and not by us. Ask at the counter and we will tell you which banks are currently offering a no-cost option.",
+    "category": "Payments",
+    "categoryId": "payments",
+    "displayOrder": 30,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-031",
+    "question": "Do you run a gold savings or monthly instalment scheme?",
+    "answer": "We run a simple eleven-month savings plan: you deposit a fixed amount monthly, and on the twelfth month we contribute one instalment. The accumulated value is redeemable against any purchase at the rate on the day of redemption. Terms are handed over in writing at enrolment — please read them.",
+    "category": "Payments",
+    "categoryId": "payments",
+    "displayOrder": 31,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-032",
+    "question": "Is my payment information stored on this website?",
+    "answer": "No. This site does not process payments and stores no card or bank information. Payment is completed in store or through your bank's own channels.",
+    "category": "Payments",
+    "categoryId": "payments",
+    "displayOrder": 32,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-033",
+    "question": "How do I find my ring size at home?",
+    "answer": "Wrap a strip of paper around the base of the finger, mark where it overlaps, and measure the length in millimetres. Divide by 3.14 to get the diameter, then match against our chart. Do it in the evening — fingers are smallest in the morning and after air conditioning. If you are between sizes, go up.",
+    "category": "Product Sizing",
+    "categoryId": "sizing",
+    "displayOrder": 33,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-034",
+    "question": "How do I measure for a bangle?",
+    "answer": "Bring the thumb across to touch the little finger, and measure around the widest part of the folded hand with a tape. Match that circumference to our size chart. Indian bangle sizes (2.4, 2.6, 2.8 and so on) refer to internal diameter in inches and eighths.",
+    "category": "Product Sizing",
+    "categoryId": "sizing",
+    "displayOrder": 34,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-035",
+    "question": "Do you resize rings, and is it free?",
+    "answer": "Free once, within twelve months of purchase, for up to two sizes in either direction. Beyond that, or beyond twelve months, we charge for the gold added and the labour only. Eternity bands and fully pavé shanks cannot be resized — they have to be remade.",
+    "category": "Product Sizing",
+    "categoryId": "sizing",
+    "displayOrder": 35,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-036",
+    "question": "Can chains and necklaces be shortened or lengthened?",
+    "answer": "Yes. Shortening is done at no charge and the removed gold is credited back to you at that day's rate. Lengthening is charged at the rate for the gold added, plus labour.",
+    "category": "Product Sizing",
+    "categoryId": "sizing",
+    "displayOrder": 36,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-037",
+    "question": "What length of chain should I buy?",
+    "answer": "16\" sits at the base of the throat, 18\" just below the collarbone, 20\" at the top of the sternum, 22\"–24\" mid-chest and works over a kurta. For a pendant, 18\" suits most women and 22\" most men.",
+    "category": "Product Sizing",
+    "categoryId": "sizing",
+    "displayOrder": 37,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-038",
+    "question": "How should I clean gold jewellery at home?",
+    "answer": "Warm water, a drop of plain dish soap, and a soft toothbrush. Rinse and dry with a lint-free cloth. That is all it needs. Avoid toothpaste — it is abrasive and it will dull a polished finish over time.",
+    "category": "Care, Warranty & Repairs",
+    "categoryId": "care-warranty",
+    "displayOrder": 38,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-039",
+    "question": "How do I care for diamonds?",
+    "answer": "What dulls a diamond is skin oil, not dust. Soak for ten minutes in warm soapy water, brush gently behind the stone where oil collects, rinse and dry. Never use bleach, chlorine or ammonia — they attack the alloy the diamond is set in, not the stone.",
+    "category": "Care, Warranty & Repairs",
+    "categoryId": "care-warranty",
+    "displayOrder": 39,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-040",
+    "question": "How should I care for polki, kundan and enamel?",
+    "answer": "Keep them away from water entirely — polki and kundan are set on lac, and moisture will lift them. Wipe with a dry cloth only, store flat with the stones facing up, and never put them through an ultrasonic cleaner. Bring them to us before a wedding and we will refresh them free.",
+    "category": "Care, Warranty & Repairs",
+    "categoryId": "care-warranty",
+    "displayOrder": 40,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-041",
+    "question": "What does the warranty cover?",
+    "answer": "Manufacturing defects for life: failed solder joints, defective clasps, stones lost from a setting that was faulty rather than damaged. It does not cover accidental damage, normal wear, loss, or work done by another jeweller. Repairs outside warranty are quoted before we start.",
+    "category": "Care, Warranty & Repairs",
+    "categoryId": "care-warranty",
+    "displayOrder": 41,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-042",
+    "question": "How often should white gold be re-plated?",
+    "answer": "Rhodium is a surface plating and it wears. Rings need re-plating every 12–18 months, earrings and pendants far less often because they see less friction. Ask at the counter and we will quote it before we start.",
+    "category": "Care, Warranty & Repairs",
+    "categoryId": "care-warranty",
+    "displayOrder": 42,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-043",
+    "question": "Can you repair jewellery I did not buy from you?",
+    "answer": "Yes. We will assess it, quote before we start, and tell you honestly if the repair costs more than the piece is worth. We do not touch another jeweller's hallmark or alter a HUID.",
+    "category": "Care, Warranty & Repairs",
+    "categoryId": "care-warranty",
+    "displayOrder": 43,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-044",
+    "question": "Can you make a piece to my own design?",
+    "answer": "Yes — it is a large part of what we do. Bring a photograph, a sketch, or a piece you want reinterpreted. We will produce a CAD render and a quotation within a week. Nothing is cut until you have approved both, in writing.",
+    "category": "Customisation & Bridal",
+    "categoryId": "customisation",
+    "displayOrder": 44,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-045",
+    "question": "Can you remake my grandmother's jewellery into something wearable?",
+    "answer": "Frequently, and it is the work we like most. The old piece is weighed and tested in front of you, the gold is credited at that day's rate, and you pay only the difference plus making. If the piece has family value, consider keeping one element — a clasp, a medallion — and building around it.",
+    "category": "Customisation & Bridal",
+    "categoryId": "customisation",
+    "displayOrder": 45,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-046",
+    "question": "How long does a custom or bridal commission take?",
+    "answer": "A single custom piece takes 3–5 weeks. A full bridal suite takes 8–14 weeks depending on the work involved. Plan bridal orders at least four months before the wedding; we would rather turn an order down than rush it.",
+    "category": "Customisation & Bridal",
+    "categoryId": "customisation",
+    "displayOrder": 46,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-047",
+    "question": "Do you charge for design and CAD?",
+    "answer": "The first CAD render and two revisions are free. Beyond that we charge ₹2,500 per revision, refunded in full against the order if you go ahead.",
+    "category": "Customisation & Bridal",
+    "categoryId": "customisation",
+    "displayOrder": 47,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-048",
+    "question": "Can I supply my own stones?",
+    "answer": "Yes. We will inspect and weigh them in your presence and record them on the job card. We will decline to set stones that are chipped or badly abraded, because they will not survive setting — we will tell you why, and show you under the loupe.",
+    "category": "Customisation & Bridal",
+    "categoryId": "customisation",
+    "displayOrder": 48,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-049",
+    "question": "Do you engrave?",
+    "answer": "Yes, free of charge on bands and lockets — names, dates, or a short line in English, Hindi, Gujarati or Marathi. Hand engraving takes two working days; laser engraving is same-day.",
+    "category": "Customisation & Bridal",
+    "categoryId": "customisation",
+    "displayOrder": 49,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-050",
+    "question": "Do I need an account to browse or order?",
+    "answer": "No. This website is a showcase for our collections — the account, wishlist, cart and checkout screens are demonstrations and are not connected to any server. To place a real order, call or WhatsApp us on +91 91675 89002, or visit the store.",
+    "category": "My Account & Registration",
+    "categoryId": "account",
+    "displayOrder": 50,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-051",
+    "question": "Is my personal information stored by this website?",
+    "answer": "Nothing you type into this site is transmitted anywhere. Wishlist and cart contents are held in your own browser's local storage and never leave your device. Clearing your browser data clears them.",
+    "category": "My Account & Registration",
+    "categoryId": "account",
+    "displayOrder": 51,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-052",
+    "question": "How do I update the details you hold on me?",
+    "answer": "Call us on +91 91675 89002 or email mayurajewellers2019@gmail.com and we will update our records the same day. If you would like the details we hold, or would like them deleted, ask and we will do it within thirty days.",
+    "category": "My Account & Registration",
+    "categoryId": "account",
+    "displayOrder": 52,
+    "isFeatured": false,
+    "isActive": true
+  },
+  {
+    "legacyId": "faq-053",
+    "question": "How do I unsubscribe from your messages?",
+    "answer": "Reply STOP to any WhatsApp or SMS, use the unsubscribe link at the foot of any email, or simply tell us at the counter. We remove you the same day and we do not sell contact details to anyone, ever.",
+    "category": "My Account & Registration",
+    "categoryId": "account",
+    "displayOrder": 53,
+    "isFeatured": false,
+    "isActive": true
+  }
+]
