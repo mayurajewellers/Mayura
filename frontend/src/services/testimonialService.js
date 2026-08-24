@@ -71,6 +71,42 @@ export const testimonialService = {
       ratingDistribution,
     }
   },
+
+  /**
+   * Admin: Get all testimonials (GET /api/v1/admin/testimonials)
+   */
+  async getAdminTestimonials(params = {}) {
+    const response = await apiClient.get('/admin/testimonials', { params })
+    if (!response.success) return { success: false, message: response.message, data: null }
+    return { success: true, data: response.data }
+  },
+
+  /**
+   * Admin: Create testimonial (POST /api/v1/admin/testimonials)
+   */
+  async createTestimonial(payload) {
+    const response = await apiClient.post('/admin/testimonials', payload)
+    if (!response.success) return { success: false, message: response.message }
+    return { success: true, message: response.message, data: response.data }
+  },
+
+  /**
+   * Admin: Update testimonial (PUT /api/v1/admin/testimonials/:id)
+   */
+  async updateTestimonial(id, payload) {
+    const response = await apiClient.put(`/admin/testimonials/${encodeURIComponent(id)}`, payload)
+    if (!response.success) return { success: false, message: response.message }
+    return { success: true, message: response.message, data: response.data }
+  },
+
+  /**
+   * Admin: Soft-delete testimonial (DELETE /api/v1/admin/testimonials/:id)
+   */
+  async deleteTestimonial(id) {
+    const response = await apiClient.delete(`/admin/testimonials/${encodeURIComponent(id)}`)
+    if (!response.success) return { success: false, message: response.message }
+    return { success: true, message: response.message }
+  },
 }
 
 export default testimonialService

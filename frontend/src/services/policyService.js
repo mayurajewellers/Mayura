@@ -70,6 +70,50 @@ export const policyService = {
       policy,
     }
   },
+
+  /**
+   * Fetch admin policies from GET /api/v1/admin/policies
+   */
+  async getAdminPolicies(params = {}) {
+    const response = await apiClient.get('/admin/policies', { params })
+    if (!response.success) {
+      return { success: false, message: response.message, data: null }
+    }
+    return { success: true, data: response.data }
+  },
+
+  /**
+   * Create new policy via POST /api/v1/admin/policies
+   */
+  async createPolicy(payload) {
+    const response = await apiClient.post('/admin/policies', payload)
+    if (!response.success) {
+      return { success: false, message: response.message }
+    }
+    return { success: true, message: response.message, data: response.data }
+  },
+
+  /**
+   * Update existing policy via PUT /api/v1/admin/policies/:id
+   */
+  async updatePolicy(id, payload) {
+    const response = await apiClient.put(`/admin/policies/${encodeURIComponent(id)}`, payload)
+    if (!response.success) {
+      return { success: false, message: response.message }
+    }
+    return { success: true, message: response.message, data: response.data }
+  },
+
+  /**
+   * Soft-delete policy via DELETE /api/v1/admin/policies/:id
+   */
+  async deletePolicy(id) {
+    const response = await apiClient.delete(`/admin/policies/${encodeURIComponent(id)}`)
+    if (!response.success) {
+      return { success: false, message: response.message }
+    }
+    return { success: true, message: response.message }
+  },
 }
 
 export default policyService

@@ -67,6 +67,42 @@ export const faqService = {
       categories,
     }
   },
+
+  /**
+   * Admin: Get all FAQs (GET /api/v1/admin/faqs)
+   */
+  async getAdminFaqs(params = {}) {
+    const response = await apiClient.get('/admin/faqs', { params })
+    if (!response.success) return { success: false, message: response.message, data: null }
+    return { success: true, data: response.data }
+  },
+
+  /**
+   * Admin: Create FAQ (POST /api/v1/admin/faqs)
+   */
+  async createFaq(payload) {
+    const response = await apiClient.post('/admin/faqs', payload)
+    if (!response.success) return { success: false, message: response.message }
+    return { success: true, message: response.message, data: response.data }
+  },
+
+  /**
+   * Admin: Update FAQ (PUT /api/v1/admin/faqs/:id)
+   */
+  async updateFaq(id, payload) {
+    const response = await apiClient.put(`/admin/faqs/${encodeURIComponent(id)}`, payload)
+    if (!response.success) return { success: false, message: response.message }
+    return { success: true, message: response.message, data: response.data }
+  },
+
+  /**
+   * Admin: Soft-delete FAQ (DELETE /api/v1/admin/faqs/:id)
+   */
+  async deleteFaq(id) {
+    const response = await apiClient.delete(`/admin/faqs/${encodeURIComponent(id)}`)
+    if (!response.success) return { success: false, message: response.message }
+    return { success: true, message: response.message }
+  },
 }
 
 export default faqService
