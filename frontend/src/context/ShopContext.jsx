@@ -38,8 +38,9 @@ export function ShopProvider({ children }) {
   /* ----------------------------------------------------------------- cart */
   const addToCart = useCallback(
     (product, { size = null, variant = null, quantity = 1, silent = false } = {}) => {
+      const pId = product.id || product._id
       const variantKey = variant ? `${variant.purity ?? ''}-${variant.shade ?? ''}` : 'std'
-      const lineKey = `${product.id}::${size ?? 'default'}::${variantKey}`
+      const lineKey = `${pId}::${size ?? 'default'}::${variantKey}`
       let added = true
 
       setCart((current) => {
@@ -47,7 +48,11 @@ export function ShopProvider({ children }) {
         if (existing) {
           return current.map((line) =>
             line.key === lineKey
-              ? { ...line, quantity: Math.min(line.quantity + quantity, CART_LIMIT) }
+              ? {
+                  ...line,
+                  product: line.product || product,
+                  quantity: Math.min(line.quantity + quantity, CART_LIMIT),
+                }
               : line,
           )
         }
@@ -55,7 +60,7 @@ export function ShopProvider({ children }) {
           added = false
           return current
         }
-        return [...current, { key: lineKey, productId: product.id, size, variant, quantity }]
+        return [...current, { key: lineKey, productId: pId, product, size, variant, quantity }]
       })
 
       if (!silent) {
@@ -100,9 +105,10 @@ export function ShopProvider({ children }) {
     (product) => {
       let nowSaved = false
       setWishlist((current) => {
-        if (current.includes(product.id)) return current.filter((id) => id !== product.id)
+        const pId = product.id || product._id
+        if (current.includes(pId)) return current.filter((id) => id !== pId)
         nowSaved = true
-        return [product.id, ...current]
+        return [pId, ...current]
       })
       pushToast({
         title: nowSaved ? 'Saved to wishlist' : 'Removed from wishlist',
@@ -119,7 +125,8 @@ export function ShopProvider({ children }) {
   const moveWishlistItemToCart = useCallback(
     (product) => {
       addToCart(product, { size: product.size?.default ?? null, silent: true })
-      setWishlist((current) => current.filter((id) => id !== product.id))
+      const pId = product.id || product._id
+      setWishlist((current) => current.filter((id) => id !== pId))
       pushToast({ title: 'Moved to bag', message: product.name, tone: 'success' })
     },
     [addToCart, pushToast, setWishlist],
@@ -140,8 +147,14 @@ export function ShopProvider({ children }) {
     () =>
       cart
         .map((line) => {
-          const product = getProductById(line.productId)
-          return product ? { ...line, product, lineTotal: product.price * line.quantity } : null
+          const product = line.product || getProductById(line.productId)
+          if (!product) return null
+          const price = product.price ?? line.price ?? 0
+          return {
+            ...line,
+            product,
+            lineTotal: price * line.quantity,
+          }
         })
         .filter(Boolean),
     [cart],
