@@ -7,6 +7,7 @@ import { CONTACT } from '@constants/site'
 import { CATEGORY_NAV, SERVICE_LINKS } from '@data/navigation'
 import { EASE_LUXE } from '@constants/motion'
 import { JEWEL_ICONS } from '@components/common/JewelIcons'
+import { useAuth } from '@hooks/index'
 import Drawer from '@components/common/Drawer'
 import Button from '@components/common/Button'
 import cn from '@utils/cn'
@@ -14,6 +15,7 @@ import cn from '@utils/cn'
 /** Full-height mobile navigation mirroring the desktop category rail. */
 export default function MobileMenu({ open, onClose }) {
   const [expanded, setExpanded] = useState(null)
+  const { user, isAuthenticated, logout } = useAuth()
 
   const toggle = (label) => setExpanded((current) => (current === label ? null : label))
 
@@ -26,9 +28,31 @@ export default function MobileMenu({ open, onClose }) {
       width="max-w-sm"
       footer={
         <div className="space-y-3">
-          <Button variant="primary" fullWidth to={ROUTES.login} onClick={onClose}>
-            Sign in
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <div className="rounded-luxe border border-gold/25 bg-gold/[0.08] p-3 text-left">
+                <p className="font-display text-body-sm font-semibold text-charcoal">{user?.name || 'Customer'}</p>
+                <p className="font-sans text-body-xs text-charcoal-200">{user?.email}</p>
+              </div>
+              <Button variant="primary" fullWidth to={ROUTES.profile} onClick={onClose}>
+                My Profile & Orders
+              </Button>
+              <Button
+                variant="outline"
+                fullWidth
+                onClick={() => {
+                  logout()
+                  onClose()
+                }}
+              >
+                Sign out
+              </Button>
+            </>
+          ) : (
+            <Button variant="primary" fullWidth to={ROUTES.login} onClick={onClose}>
+              Sign in
+            </Button>
+          )}
           <Button
             variant="outline"
             fullWidth

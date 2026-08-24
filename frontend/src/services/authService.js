@@ -9,9 +9,16 @@ const read = () => {
   }
 }
 
+const notifyAuthChange = () => {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('mayura:auth:changed', { detail: authService.currentUser() }))
+  }
+}
+
 const write = (state) => {
   try {
     window.localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify(state))
+    notifyAuthChange()
   } catch {
     /* storage unavailable */
   }
@@ -32,10 +39,31 @@ export const authService = {
    */
   currentUser() {
     const { users, session } = read()
-    if (session && session.user) return session.user
+    if (session && session.user) {
+      const u = session.user
+      return {
+        ...u,
+        role: (u.role || 'CUSTOMER').toUpperCase(),
+      }
+    }
     if (session && session.email) {
       const match = users.find((u) => u.email === session.email)
-      if (match) return { name: match.name, email: match.email, role: match.role || 'CUSTOMER' }
+      if (match) {
+        return {
+          name: match.name,
+          email: match.email,
+          phone: match.phone || '',
+          role: (match.role || 'CUSTOMER').toUpperCase(),
+          addresses: match.addresses || [],
+        }
+      }
+      return {
+        name: session.email.split('@')[0],
+        email: session.email,
+        phone: '',
+        role: 'CUSTOMER',
+        addresses: [],
+      }
     }
     return null
   },
@@ -56,7 +84,9 @@ export const authService = {
     const user = this.currentUser()
     const token = window.localStorage.getItem('mayura.token.v1') || read()?.session?.token
     if (!token) return false
-    return Boolean(user && user.role === 'CUSTOMER')
+    if (!user) return true // Token present, default to customer
+    const role = (user.role || 'CUSTOMER').toUpperCase()
+    return role !== 'ADMIN'
   },
 
   /**
@@ -66,7 +96,8 @@ export const authService = {
     const user = this.currentUser()
     const token = window.localStorage.getItem('mayura.token.v1') || read()?.session?.token
     if (!token) return false
-    return Boolean(user && user.role === 'ADMIN')
+    if (!user) return false
+    return String(user.role).toUpperCase() === 'ADMIN'
   },
 
   /**
@@ -92,6 +123,52 @@ export const authService = {
     }
 
     return { success: false, user: null }
+  },
+
+  /**
+   * Update current customer profile (PUT /api/v1/auth/me)
+   */
+  async updateProfile({ name, phone, addresses, avatar }) {
+    try {
+      const response = await apiClient.put('/auth/me', { name, phone, addresses, avatar })
+      if (response.success && response.data?.user) {
+        const user = response.data.user
+        const state = read()
+        if (state.session) {
+          state.session.user = { ...state.session.user, ...user }
+        }
+        const userMatch = state.users.find((u) => u.email === user.email)
+        if (userMatch) {
+          if (name) userMatch.name = name
+          if (phone !== undefined) userMatch.phone = phone
+          if (addresses) userMatch.addresses = addresses
+        }
+        write(state)
+        return { success: true, user }
+      }
+    } catch {
+      /* API unavailable, fallback local update */
+    }
+
+    // Local fallback update
+    const state = read()
+    if (state.session && state.session.user) {
+      if (name) state.session.user.name = name
+      if (phone !== undefined) state.session.user.phone = phone
+      if (addresses) state.session.user.addresses = addresses
+      if (avatar !== undefined) state.session.user.avatar = avatar
+
+      const userMatch = state.users.find((u) => u.email === state.session.email)
+      if (userMatch) {
+        if (name) userMatch.name = name
+        if (phone !== undefined) userMatch.phone = phone
+        if (addresses) userMatch.addresses = addresses
+      }
+      write(state)
+      return { success: true, user: state.session.user }
+    }
+
+    return { success: false, error: 'Could not update profile' }
   },
 
   /**
@@ -147,13 +224,13 @@ export const authService = {
     state.session = {
       email: normalised,
       token: `mock-jwt-token-${Date.now()}`,
-      user: { name: user.name, email: user.email, role: 'CUSTOMER' },
+      user: { name: user.name, email: user.email, phone: user.phone || '', role: 'CUSTOMER', addresses: user.addresses || [] },
       startedAt: new Date().toISOString(),
     }
     write(state)
     window.localStorage.setItem('mayura.token.v1', state.session.token)
 
-    return { ok: true, success: true, user: { name: user.name, email: user.email, role: 'CUSTOMER' } }
+    return { ok: true, success: true, user: state.session.user }
   },
 
   /**
@@ -203,7 +280,7 @@ export const authService = {
 
       if (response.success && response.data?.token) {
         const token = response.data.token
-        const user = response.data.user || { name: name.trim(), email: normalised, role: 'CUSTOMER' }
+        const user = response.data.user || { name: name.trim(), email: normalised, phone: phone ? phone.trim() : '', role: 'CUSTOMER' }
 
         window.localStorage.setItem('mayura.token.v1', token)
 
@@ -238,13 +315,13 @@ export const authService = {
     state.session = {
       email: normalised,
       token: `mock-jwt-token-${Date.now()}`,
-      user: { name: user.name, email: user.email, role: 'CUSTOMER' },
+      user: { name: user.name, email: user.email, phone: user.phone || '', role: 'CUSTOMER' },
       startedAt: new Date().toISOString(),
     }
     write(state)
     window.localStorage.setItem('mayura.token.v1', state.session.token)
 
-    return { ok: true, success: true, user: { name: user.name, email: user.email, role: 'CUSTOMER' } }
+    return { ok: true, success: true, user: state.session.user }
   },
 
   /**
@@ -271,6 +348,7 @@ export const authService = {
     state.session = null
     write(state)
     window.localStorage.removeItem('mayura.token.v1')
+    notifyAuthChange()
   },
 }
 

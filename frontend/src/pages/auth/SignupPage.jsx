@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, Phone, User } from 'lucide-react'
@@ -42,7 +42,14 @@ export default function SignupPage() {
   const fromPath =
     location.state?.from?.pathname ||
     searchParams.get('redirect') ||
-    ROUTES.checkout
+    ROUTES.profile
+
+  useEffect(() => {
+    if (authService.isCustomer()) {
+      const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.profile
+      navigate(target, { replace: true })
+    }
+  }, [navigate, location.state, searchParams])
 
   const handleSubmit = async (event) => {
     event.preventDefault()

@@ -7,7 +7,7 @@ import authService from '@services/authService'
  * Route guard enforcing authenticated CUSTOMER status before accessing /checkout.
  * Redirects unauthenticated visitors to /login preserving current location state.
  */
-export default function RequireCustomerAuth({ children }) {
+export default function RequireCustomerAuth({ children, requireCart = true }) {
   const location = useLocation()
   const { cartLines } = useShop()
 
@@ -18,8 +18,8 @@ export default function RequireCustomerAuth({ children }) {
     return <Navigate to={ROUTES.login} state={{ from: location }} replace />
   }
 
-  // 2. Empty cart -> Redirect to cart page
-  if (!cartLines || cartLines.length === 0) {
+  // 2. Empty cart check only if requireCart is true
+  if (requireCart && (!cartLines || cartLines.length === 0)) {
     return <Navigate to={ROUTES.cart} replace />
   }
 

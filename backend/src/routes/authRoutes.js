@@ -4,6 +4,7 @@ import {
   login,
   logout,
   getMe,
+  updateMe,
   forgotPassword,
   resetPassword,
 } from '../controllers/authController.js'
@@ -18,6 +19,7 @@ router.post('/register', register)
 router.post('/login', login)
 router.post('/logout', logout)
 router.get('/me', authenticate, getMe)
+router.put('/me', authenticate, updateMe)
 router.post('/forgot-password', forgotPassword)
 router.post('/reset-password', resetPassword)
 

@@ -5,7 +5,7 @@ import { ChevronDown, Heart, ImagePlus, Menu, Mic, Search, ShoppingBag, Store, U
 import { ROUTES } from '@constants/routes'
 import { CATEGORY_NAV, SERVICE_LINKS } from '@data/navigation'
 import { useShop } from '@context/ShopContext'
-import { useEscapeKey, useOnClickOutside, useScrollPosition } from '@hooks/index'
+import { useEscapeKey, useOnClickOutside, useScrollPosition, useAuth } from '@hooks/index'
 import { JEWEL_ICONS } from '@components/common/JewelIcons'
 import IconButton from '@components/common/IconButton'
 import Logo from './Logo'
@@ -30,6 +30,7 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
      keeps the header perfectly still when the user stops mid-transition. */
   const { scrolled } = useScrollPosition({ enter: 130, exit: 16 })
   const { cartCount, wishlistCount } = useShop()
+  const { user, isAuthenticated } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
   const headerRef = useRef(null)
@@ -194,7 +195,17 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
               className="hidden sm:inline-flex"
             />
             <IconButton icon={Heart} label="Wishlist" count={wishlistCount} to={ROUTES.wishlist} />
-            <IconButton icon={User} label="Sign in" to={ROUTES.login} />
+            <div className="relative">
+              <IconButton
+                icon={User}
+                label={isAuthenticated ? (user?.name ? `Profile (${user.name})` : 'My Profile') : 'Sign in'}
+                to={isAuthenticated ? ROUTES.profile : ROUTES.login}
+                className={cn(isAuthenticated && 'text-bronze font-medium')}
+              />
+              {isAuthenticated && (
+                <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-gold shadow-sm" aria-hidden="true" />
+              )}
+            </div>
             <IconButton icon={ShoppingBag} label="Shopping bag" count={cartCount} to={ROUTES.cart} />
           </div>
         </div>

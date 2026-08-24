@@ -255,3 +255,6 @@ export function useCopyToClipboard(resetAfter = 2000) {
 
   return [copied, copy]
 }
+
+export { default as useAuth } from './useAuth'
+

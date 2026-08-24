@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { Chrome, Facebook, Mail, Smartphone } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ROUTES } from '@constants/routes'
 import { EASE_LUXE } from '@constants/motion'
@@ -8,12 +8,6 @@ import { useDocumentTitle } from '@hooks/index'
 import authService from '@services/authService'
 import Button from '@components/common/Button'
 import { Checkbox, PasswordField, TextField } from '@components/common/Field'
-
-const SOCIALS = [
-  { label: 'Google', icon: Chrome },
-  { label: 'Facebook', icon: Facebook },
-  { label: 'Mobile OTP', icon: Smartphone },
-]
 
 export default function LoginPage() {
   useDocumentTitle('Sign in')
@@ -30,7 +24,14 @@ export default function LoginPage() {
   const fromPath =
     location.state?.from?.pathname ||
     searchParams.get('redirect') ||
-    ROUTES.checkout
+    ROUTES.profile
+
+  useEffect(() => {
+    if (authService.isCustomer()) {
+      const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.profile
+      navigate(target, { replace: true })
+    }
+  }, [navigate, location.state, searchParams])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -119,36 +120,6 @@ export default function LoginPage() {
           {loading ? 'Signing in...' : 'Sign in & Continue'}
         </Button>
       </form>
-
-      {/* ------------------------------------------------------ social UI */}
-      <div className="mt-10">
-        <div className="flex items-center gap-4">
-          <span className="mj-rule flex-1" aria-hidden="true" />
-          <span className="font-sans text-eyebrow uppercase tracking-luxe text-charcoal-50">
-            Or continue with
-          </span>
-          <span className="mj-rule flex-1" aria-hidden="true" />
-        </div>
-
-        <div className="mt-7 grid grid-cols-3 gap-3">
-          {SOCIALS.map((social) => (
-            <button
-              key={social.label}
-              type="button"
-              className="group/soc flex flex-col items-center gap-2.5 rounded-card border border-charcoal/12 py-5 transition-all duration-400 ease-luxe hover:-translate-y-0.5 hover:border-gold hover:bg-gold/[0.05]"
-            >
-              <social.icon
-                className="h-5 w-5 text-charcoal-100 transition-colors duration-300 group-hover/soc:text-bronze"
-                strokeWidth={1.3}
-                aria-hidden="true"
-              />
-              <span className="font-sans text-[0.625rem] uppercase tracking-wide2 text-charcoal-100">
-                {social.label}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
 
       <p className="mt-10 text-center font-sans text-body-xs leading-relaxed text-charcoal-50">
         By signing in you accept our{' '}

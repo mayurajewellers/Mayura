@@ -29,6 +29,8 @@ import RishtaPlanPage from '@pages/RishtaPlanPage'
 import PolicyPage from '@pages/PolicyPage'
 import NotFoundPage from '@pages/NotFoundPage'
 
+import ProfilePage from '@pages/ProfilePage'
+
 import LoginPage from '@pages/auth/LoginPage'
 import SignupPage from '@pages/auth/SignupPage'
 import ForgotPasswordPage from '@pages/auth/ForgotPasswordPage'
@@ -84,6 +86,14 @@ export default function App() {
             }
           />
           <Route path={ROUTES.orderConfirmed} element={<OrderConfirmedPage />} />
+          <Route
+            path={ROUTES.profile}
+            element={
+              <RequireCustomerAuth requireCart={false}>
+                <ProfilePage />
+              </RequireCustomerAuth>
+            }
+          />
           <Route path={ROUTES.faq} element={<FaqPage />} />
           <Route path={ROUTES.blog} element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />

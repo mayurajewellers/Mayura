@@ -281,3 +281,37 @@ export const resetPassword = async (req, res, next) => {
     next(error)
   }
 }
+
+/**
+ * @desc    Update current authenticated user profile
+ * @route   PUT /api/v1/auth/me
+ * @access  Private
+ */
+export const updateMe = async (req, res, next) => {
+  try {
+    const { name, phone, addresses, avatar } = req.body
+    const user = req.user
+
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Authentication required' })
+    }
+
+    if (name && name.trim()) user.name = name.trim()
+    if (phone !== undefined) user.phone = phone.trim()
+    if (avatar !== undefined) user.avatar = avatar.trim()
+    if (Array.isArray(addresses)) user.addresses = addresses
+
+    await user.save()
+
+    return res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      data: {
+        user: user.toSafeObject(),
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+

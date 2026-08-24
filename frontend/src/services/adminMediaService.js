@@ -1,4 +1,4 @@
-import apiClient from './apiClient'
+import apiClient, { getApiBaseUrl, getAuthToken } from './apiClient'
 
 /**
  * Normalizes backend media record payload
@@ -34,12 +34,13 @@ export const adminMediaService = {
     formData.append('folder', folder)
     if (altText) formData.append('altText', altText)
 
-    const token = window.localStorage.getItem('mayura.token.v1')
+    const token = getAuthToken()
     const headers = {}
     if (token) headers.Authorization = `Bearer ${token}`
 
     try {
-      const res = await fetch('/api/v1/admin/media/upload', {
+      const uploadUrl = `${getApiBaseUrl()}/admin/media/upload`
+      const res = await fetch(uploadUrl, {
         method: 'POST',
         headers,
         body: formData,
@@ -178,13 +179,14 @@ export const adminMediaService = {
   },
 
   /**
-   * Soft-delete media record (sets isActive = false)
+   * Delete media record (soft delete by default, or permanent hard delete)
    * DELETE /api/v1/admin/media/:id
    */
-  async deleteMedia(id) {
+  async deleteMedia(id, hard = false) {
     if (!id) return { success: false, message: 'Media ID is required' }
 
-    const response = await apiClient.delete(`/admin/media/${encodeURIComponent(id)}`)
+    const endpoint = `/admin/media/${encodeURIComponent(id)}${hard ? '?hard=true' : ''}`
+    const response = await apiClient.delete(endpoint)
 
     if (!response.success) {
       return {

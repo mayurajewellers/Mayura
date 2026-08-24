@@ -47,6 +47,19 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    addresses: [
+      {
+        name: { type: String, trim: true, default: '' },
+        phone: { type: String, trim: true, default: '' },
+        line1: { type: String, trim: true, default: '' },
+        line2: { type: String, trim: true, default: '' },
+        city: { type: String, trim: true, default: '' },
+        state: { type: String, trim: true, default: '' },
+        pincode: { type: String, trim: true, default: '' },
+        country: { type: String, trim: true, default: 'India' },
+        isDefault: { type: Boolean, default: false },
+      },
+    ],
   },
   {
     timestamps: true,
@@ -73,6 +86,7 @@ userSchema.methods.toSafeObject = function () {
     isActive: this.isActive,
     isEmailVerified: this.isEmailVerified,
     avatar: this.avatar || '',
+    addresses: this.addresses || [],
     lastLoginAt: this.lastLoginAt,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,

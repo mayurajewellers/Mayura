@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import Media from '../models/Media.js'
 import Banner from '../models/Banner.js'
-import { uploadBuffer } from '../services/cloudinary/cloudinaryService.js'
+import { uploadBuffer, destroyAsset } from '../services/cloudinary/cloudinaryService.js'
 
 /**
  * Utility to escape regex characters for search safety
@@ -334,12 +334,26 @@ export const deleteMedia = async (req, res, next) => {
       })
     }
 
+    const isHardDelete = req.query.hard === 'true' || req.query.hard === '1'
+
+    if (isHardDelete) {
+      // Destroy from Cloudinary if provider is cloudinary or has publicId
+      if (media.publicId) {
+        await destroyAsset(media.publicId, media.resourceType || 'image').catch(() => null)
+      }
+      await Media.findByIdAndDelete(media._id)
+      return res.status(200).json({
+        success: true,
+        message: 'Media record permanently deleted from database and Cloudinary storage.',
+      })
+    }
+
     media.isActive = false
     await media.save()
 
     return res.status(200).json({
       success: true,
-      message: 'Media record deactivated successfully',
+      message: 'Media record soft-deleted (deactivated) successfully',
       data: { media },
     })
   } catch (error) {

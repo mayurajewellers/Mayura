@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Edit2, Image as ImageIcon, Plus, Search, Trash2, X } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Edit2, Image as ImageIcon, Plus, Search, Trash2, Upload, X } from 'lucide-react'
 import { ROUTES } from '@constants/routes'
 import { useDocumentTitle } from '@hooks/index'
 import adminMediaService from '@services/adminMediaService'
@@ -16,6 +16,9 @@ export default function AdminMediaPage() {
   const [pagination, setPagination] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  const fileInputRef = useRef(null)
+  const modalFileInputRef = useRef(null)
+
   const [search, setSearch] = useState('')
   const [folder, setFolder] = useState('')
   const [provider, setProvider] = useState('')
@@ -25,6 +28,7 @@ export default function AdminMediaPage() {
   const [editingMedia, setEditingMedia] = useState(null)
   const [deleteMedia, setDeleteMedia] = useState(null)
   const [actionLoading, setActionLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [feedback, setFeedback] = useState({ type: '', message: '' })
 
   const [formData, setFormData] = useState({
@@ -62,6 +66,131 @@ export default function AdminMediaPage() {
   useEffect(() => {
     fetchMedia()
   }, [fetchMedia])
+
+  // Direct PC Image Upload Handler
+  const handleDirectPCUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    setFeedback({ type: '', message: '' })
+
+    // Try backend file upload API first
+    const uploadRes = await adminMediaService.uploadMedia(file, folder || 'general', file.name)
+    if (uploadRes.success && uploadRes.media) {
+      setFeedback({ type: 'success', message: `Image "${file.name}" uploaded successfully from PC!` })
+      fetchMedia()
+      setUploading(false)
+      if (e.target) e.target.value = ''
+      return
+    }
+
+    // Fallback: Read via FileReader (Data URL)
+    const reader = new FileReader()
+    reader.onload = async (event) => {
+      const dataUrl = event.target?.result
+      if (!dataUrl) {
+        setFeedback({ type: 'error', message: 'Failed to read file from PC.' })
+        setUploading(false)
+        return
+      }
+
+      const sanitizedName = file.name.replace(/\.[^/.]+$/, '')
+      const newMediaPayload = {
+        name: sanitizedName,
+        publicId: `pc-img-${Date.now()}`,
+        url: dataUrl,
+        provider: 'local',
+        resourceType: 'image',
+        folder: folder || 'general',
+        altText: sanitizedName,
+        caption: file.name,
+        isActive: true,
+      }
+
+      const res = await adminMediaService.createMedia(newMediaPayload)
+      if (res.success) {
+        setFeedback({ type: 'success', message: `Image "${file.name}" uploaded and saved to Media Library!` })
+        fetchMedia()
+      } else {
+        setFeedback({ type: 'error', message: res.message || 'Could not save uploaded file.' })
+      }
+      setUploading(false)
+      if (e.target) e.target.value = ''
+    }
+    reader.readAsDataURL(file)
+  }
+
+  // Handle Modal PC File Selection (Cloudinary Upload)
+  const handleModalFileSelect = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    const uploadRes = await adminMediaService.uploadMedia(file, formData.folder || 'general', file.name)
+
+    if (uploadRes.success && uploadRes.media) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || uploadRes.media.name,
+        publicId: uploadRes.media.publicId,
+        url: uploadRes.media.url,
+        provider: uploadRes.media.provider || 'cloudinary',
+        altText: prev.altText || uploadRes.media.altText,
+        caption: prev.caption || uploadRes.media.caption,
+      }))
+      setFeedback({ type: 'success', message: 'Image uploaded to Cloudinary successfully!' })
+    } else {
+      // Fallback: Read via FileReader
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result
+        if (dataUrl) {
+          const sanitizedName = file.name.replace(/\.[^/.]+$/, '')
+          setFormData((prev) => ({
+            ...prev,
+            name: prev.name || sanitizedName,
+            publicId: prev.publicId || `pc-${Date.now()}`,
+            url: dataUrl,
+            altText: prev.altText || sanitizedName,
+            caption: prev.caption || file.name,
+          }))
+        }
+      }
+      reader.readAsDataURL(file)
+    }
+    setUploading(false)
+  }
+
+  const handleSoftDelete = async () => {
+    if (!deleteMedia) return
+    setActionLoading(true)
+
+    const res = await adminMediaService.deleteMedia(deleteMedia._id || deleteMedia.id, false)
+    if (res.success) {
+      setDeleteMedia(null)
+      setFeedback({ type: 'success', message: 'Media record soft-deleted (deactivated) successfully.' })
+      fetchMedia()
+    } else {
+      setFeedback({ type: 'error', message: res.message || 'Media deletion refused by server.' })
+    }
+    setActionLoading(false)
+  }
+
+  const handleHardDelete = async () => {
+    if (!deleteMedia) return
+    setActionLoading(true)
+
+    const res = await adminMediaService.deleteMedia(deleteMedia._id || deleteMedia.id, true)
+    if (res.success) {
+      setDeleteMedia(null)
+      setFeedback({ type: 'success', message: 'Media record permanently destroyed from Cloudinary and database.' })
+      fetchMedia()
+    } else {
+      setFeedback({ type: 'error', message: res.message || 'Failed to hard-delete media record.' })
+    }
+    setActionLoading(false)
+  }
 
   const openCreateModal = () => {
     setEditingMedia(null)
@@ -117,31 +246,34 @@ export default function AdminMediaPage() {
     setActionLoading(false)
   }
 
-  const handleSoftDelete = async () => {
-    if (!deleteMedia) return
-    setActionLoading(true)
-
-    const res = await adminMediaService.deleteMedia(deleteMedia._id || deleteMedia.id)
-    if (res.success) {
-      setDeleteMedia(null)
-      setFeedback({ type: 'success', message: 'Media record soft-deleted successfully.' })
-      fetchMedia()
-    } else {
-      setFeedback({ type: 'error', message: res.message || 'Media deletion refused by server (it may be referenced by an active banner).' })
-    }
-    setActionLoading(false)
-  }
-
   return (
     <>
+      {/* Hidden file input for PC Upload */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleDirectPCUpload}
+        accept="image/*"
+        className="hidden"
+      />
+
       <PageHero
         eyebrow="Admin CMS"
         title="Media Library Records"
-        lede="Register, organize, and manage storage-agnostic media asset records in MongoDB."
+        lede="Register, upload, organize, and manage media assets in MongoDB."
         breadcrumbs={[{ label: 'Home', to: ROUTES.home }, { label: 'Admin Media' }]}
       >
-        <div className="mt-6 flex justify-end">
-          <Button variant="primary" icon={Plus} iconPosition="left" onClick={openCreateModal}>
+        <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+          <Button
+            variant="primary"
+            icon={Upload}
+            iconPosition="left"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+          >
+            {uploading ? 'Uploading...' : 'Upload Image from PC'}
+          </Button>
+          <Button variant="outline" icon={Plus} iconPosition="left" onClick={openCreateModal}>
             Register Media Asset
           </Button>
         </div>
@@ -281,6 +413,51 @@ export default function AdminMediaPage() {
             </div>
 
             <form onSubmit={handleFormSubmit} className="mt-6 space-y-6">
+              {/* PC File Upload Dropzone */}
+              <div className="rounded-xl border-2 border-dashed border-gold/40 bg-gold/[0.04] p-5 text-center transition-all hover:border-gold">
+                <input
+                  type="file"
+                  ref={modalFileInputRef}
+                  onChange={handleModalFileSelect}
+                  accept="image/*"
+                  className="hidden"
+                />
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="rounded-full bg-gold/20 p-3 text-bronze">
+                    <Upload className="h-6 w-6" />
+                  </div>
+                  <p className="font-sans text-body-xs font-semibold text-charcoal">
+                    Upload image file from computer
+                  </p>
+                  <p className="font-sans text-[0.7rem] text-charcoal-200">
+                    PNG, JPG, WEBP or SVG up to 10MB
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="mt-2 text-xs py-1.5 px-4"
+                    onClick={() => modalFileInputRef.current?.click()}
+                  >
+                    Choose Image File
+                  </Button>
+                </div>
+              </div>
+
+              {/* Image Preview if URL exists */}
+              {formData.url && (
+                <div className="flex items-center gap-4 rounded-lg border border-charcoal/10 bg-white p-3">
+                  <img
+                    src={formData.url}
+                    alt="Preview"
+                    className="h-16 w-16 rounded-md object-cover border border-charcoal/10"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-sans text-body-xs font-bold text-charcoal truncate">Image Preview</p>
+                    <p className="font-mono text-[0.65rem] text-charcoal-200 truncate">{formData.url}</p>
+                  </div>
+                </div>
+              )}
+
               <div className="grid gap-6 sm:grid-cols-2">
                 <TextField
                   label="Media Name"
@@ -301,10 +478,10 @@ export default function AdminMediaPage() {
               </div>
 
               <TextField
-                label="Asset URL"
+                label="Asset URL / File Source"
                 name="url"
                 required
-                placeholder="/images/editorial/layered-haram-trunk.jpg"
+                placeholder="/images/editorial/layered-haram-trunk.jpg or data:image/..."
                 value={formData.url}
                 onChange={(e) => setFormData({ ...formData, url: e.target.value })}
               />
@@ -369,21 +546,42 @@ export default function AdminMediaPage() {
         </div>
       )}
 
-      {/* SOFT DELETE DIALOG */}
+      {/* DELETE DIALOG */}
       {deleteMedia && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoal/60 backdrop-blur-xs p-4">
-          <div className="w-full max-w-md rounded-panel bg-ivory p-6 shadow-xl">
-            <h3 className="font-display text-display-xs text-charcoal">Confirm Soft Delete</h3>
-            <p className="mt-3 text-body-sm text-charcoal-200">
-              Are you sure you want to soft-delete media <strong>{deleteMedia.name}</strong>? This sets{' '}
-              <code className="bg-champagne-100 px-1 py-0.5 rounded text-bronze">isActive = false</code>.
+          <div className="w-full max-w-md rounded-panel bg-ivory p-6 shadow-xl space-y-4">
+            <h3 className="font-display text-display-xs text-charcoal">Delete Media Asset</h3>
+            <p className="text-body-sm text-charcoal-200">
+              Select how you would like to handle <strong>{deleteMedia.name}</strong>:
             </p>
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="space-y-2 rounded-lg border border-charcoal/10 bg-white p-3 font-sans text-body-xs text-charcoal-200">
+              <p>
+                <strong className="text-charcoal">Soft Delete (Deactivate):</strong> Sets{' '}
+                <code className="bg-champagne-100 px-1 py-0.5 rounded text-bronze font-mono">isActive = false</code>. Safe for assets referenced in banners.
+              </p>
+              <p>
+                <strong className="text-charcoal">Permanent Delete (Hard Delete):</strong> Completely destroys the asset from <strong>Cloudinary storage</strong> and purges the MongoDB record.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-end gap-2 pt-2">
               <Button variant="outline" onClick={() => setDeleteMedia(null)}>
                 Cancel
               </Button>
-              <Button variant="primary" className="bg-rose-700 hover:bg-rose-800" onClick={handleSoftDelete} disabled={actionLoading}>
-                {actionLoading ? 'Deleting...' : 'Soft Delete'}
+              <Button
+                variant="outline"
+                className="border-amber-500/50 text-amber-800 hover:bg-amber-50"
+                onClick={handleSoftDelete}
+                disabled={actionLoading}
+              >
+                {actionLoading ? 'Processing...' : 'Soft Delete'}
+              </Button>
+              <Button
+                variant="primary"
+                className="bg-rose-700 hover:bg-rose-800"
+                onClick={handleHardDelete}
+                disabled={actionLoading}
+              >
+                {actionLoading ? 'Destroying...' : 'Permanent Delete'}
               </Button>
             </div>
           </div>
