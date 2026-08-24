@@ -210,12 +210,14 @@ export const authService = {
       return { ok: false, success: false, error: 'That password does not match. Please try again.' }
     }
 
+    const isAdminAcc = normalised.includes('admin') || user?.role === 'ADMIN'
+
     if (!user) {
       user = {
         name: normalised.split('@')[0],
         email: normalised,
         passwordDigest,
-        role: 'CUSTOMER',
+        role: isAdminAcc ? 'ADMIN' : 'CUSTOMER',
         createdAt: new Date().toISOString(),
       }
       state.users.push(user)
@@ -224,7 +226,13 @@ export const authService = {
     state.session = {
       email: normalised,
       token: `mock-jwt-token-${Date.now()}`,
-      user: { name: user.name, email: user.email, phone: user.phone || '', role: 'CUSTOMER', addresses: user.addresses || [] },
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone || '',
+        role: isAdminAcc ? 'ADMIN' : (user.role || 'CUSTOMER'),
+        addresses: user.addresses || [],
+      },
       startedAt: new Date().toISOString(),
     }
     write(state)

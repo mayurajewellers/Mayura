@@ -30,7 +30,7 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
      keeps the header perfectly still when the user stops mid-transition. */
   const { scrolled } = useScrollPosition({ enter: 130, exit: 16 })
   const { cartCount, wishlistCount } = useShop()
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, isAdmin } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
   const headerRef = useRef(null)
@@ -198,12 +198,26 @@ export default function Navbar({ onOpenSearch, onOpenMenu }) {
             <div className="relative">
               <IconButton
                 icon={User}
-                label={isAuthenticated ? (user?.name ? `Profile (${user.name})` : 'My Profile') : 'Sign in'}
-                to={isAuthenticated ? ROUTES.profile : ROUTES.login}
+                label={
+                  isAuthenticated
+                    ? isAdmin
+                      ? 'Admin CMS Portal'
+                      : user?.name
+                      ? `Profile (${user.name})`
+                      : 'My Profile'
+                    : 'Sign in'
+                }
+                to={isAuthenticated ? (isAdmin ? ROUTES.admin : ROUTES.profile) : ROUTES.login}
                 className={cn(isAuthenticated && 'text-bronze font-medium')}
               />
               {isAuthenticated && (
-                <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-gold shadow-sm" aria-hidden="true" />
+                <span
+                  className={cn(
+                    'absolute bottom-1 right-1 h-2 w-2 rounded-full shadow-sm',
+                    isAdmin ? 'bg-emerald-500 animate-pulse' : 'bg-gold',
+                  )}
+                  aria-hidden="true"
+                />
               )}
             </div>
             <IconButton icon={ShoppingBag} label="Shopping bag" count={cartCount} to={ROUTES.cart} />

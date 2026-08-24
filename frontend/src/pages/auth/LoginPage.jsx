@@ -27,7 +27,9 @@ export default function LoginPage() {
     ROUTES.profile
 
   useEffect(() => {
-    if (authService.isCustomer()) {
+    if (authService.isAdmin()) {
+      navigate(ROUTES.admin, { replace: true })
+    } else if (authService.isCustomer()) {
       const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.profile
       navigate(target, { replace: true })
     }
@@ -43,7 +45,11 @@ export default function LoginPage() {
     try {
       const res = await authService.signIn({ email, password })
       if (res.ok || res.success) {
-        navigate(fromPath, { replace: true })
+        if (res.user?.role === 'ADMIN' || authService.isAdmin()) {
+          navigate(ROUTES.admin, { replace: true })
+        } else {
+          navigate(fromPath, { replace: true })
+        }
       } else {
         setError(res.error || 'Sign in failed. Please check your credentials.')
       }
