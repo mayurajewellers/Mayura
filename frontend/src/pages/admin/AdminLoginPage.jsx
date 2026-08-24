@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Gem, ShieldCheck } from 'lucide-react'
 import { ROUTES } from '@constants/routes'
@@ -18,6 +18,12 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('')
 
   const fromLocation = location.state?.from?.pathname || ROUTES.admin
+
+  useEffect(() => {
+    if (authService.isAdmin()) {
+      navigate(fromLocation, { replace: true })
+    }
+  }, [navigate, fromLocation])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

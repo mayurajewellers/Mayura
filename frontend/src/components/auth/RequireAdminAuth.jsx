@@ -8,13 +8,13 @@ import authService from '@services/authService'
  */
 export default function RequireAdminAuth({ children }) {
   const location = useLocation()
-  const currentUser = authService.currentUser()
+  const isAdmin = authService.isAdmin()
 
-  // 1. Unauthenticated or non-ADMIN user -> Deny access & redirect to login
-  if (!currentUser || currentUser.role !== 'ADMIN') {
+  // 1. Unauthenticated or non-ADMIN user -> Deny access & redirect to /admin/login
+  if (!isAdmin) {
     return (
       <Navigate
-        to={ROUTES.login}
+        to={ROUTES.adminLogin}
         state={{ from: location, message: 'Admin authorization required.' }}
         replace
       />
