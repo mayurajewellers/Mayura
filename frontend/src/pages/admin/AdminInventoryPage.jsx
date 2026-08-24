@@ -390,8 +390,8 @@ export default function AdminInventoryPage() {
 
       {/* STOCK ADJUSTMENT MODAL */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoal/60 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-lg rounded-panel bg-white p-6 shadow-2xl space-y-6 font-sans text-body-xs">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoal/60 p-4 backdrop-blur-xs overflow-y-auto">
+          <div className="w-full max-w-lg rounded-panel bg-white p-6 shadow-2xl space-y-4 font-sans text-body-xs max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-charcoal/10 pb-4">
               <div>
                 <span className="mj-eyebrow">Stock Management Operation</span>
