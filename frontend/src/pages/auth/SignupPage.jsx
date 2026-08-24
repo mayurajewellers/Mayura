@@ -42,11 +42,11 @@ export default function SignupPage() {
   const fromPath =
     location.state?.from?.pathname ||
     searchParams.get('redirect') ||
-    ROUTES.profile
+    ROUTES.home
 
   useEffect(() => {
     if (authService.isCustomer()) {
-      const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.profile
+      const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.home
       navigate(target, { replace: true })
     }
   }, [navigate, location.state, searchParams])

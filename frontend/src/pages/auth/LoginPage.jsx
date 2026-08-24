@@ -20,17 +20,17 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  // Return destination logic
+  // Return destination logic (defaults to Home page)
   const fromPath =
     location.state?.from?.pathname ||
     searchParams.get('redirect') ||
-    ROUTES.profile
+    ROUTES.home
 
   useEffect(() => {
     if (authService.isAdmin()) {
       navigate(ROUTES.admin, { replace: true })
     } else if (authService.isCustomer()) {
-      const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.profile
+      const target = location.state?.from?.pathname || searchParams.get('redirect') || ROUTES.home
       navigate(target, { replace: true })
     }
   }, [navigate, location.state, searchParams])
