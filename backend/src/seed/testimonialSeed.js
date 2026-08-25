@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename)
 const seedTestimonials = async () => {
   const mongoUri =
     process.env.MONGODB_URI ||
-    'mongodb+srv://technologiesneosix_db_user:PfP52yaxi3d6aByu@cluster0.ld0nlgc.mongodb.net/mayura_jewellers?retryWrites=true&w=majority'
+    
 
   console.log('Connecting to MongoDB for Testimonial Seed...')
   await mongoose.connect(mongoUri)
