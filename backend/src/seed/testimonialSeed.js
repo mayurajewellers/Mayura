@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename)
 
 const seedTestimonials = async () => {
   const mongoUri =
-    process.env.MONGODB_URI ||
+    process.env.MONGODB_URI
     
 
   console.log('Connecting to MongoDB for Testimonial Seed...')
